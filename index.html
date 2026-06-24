@@ -396,6 +396,33 @@
       background: #f1fbf6;
     }
 
+    .competitiveness {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #f6f8fb;
+    }
+
+    .competitiveness.ultra {
+      border-color: #f3a7a0;
+      background: #fff4f2;
+    }
+
+    .competitiveness.high {
+      border-color: #f0c36d;
+      background: #fff8e8;
+    }
+
+    .competitiveness.medium {
+      border-color: #9ec5e8;
+      background: #f2f7fd;
+    }
+
+    .competitiveness.baseline {
+      border-color: #9fd7bd;
+      background: #f1fbf6;
+    }
+
     .prep-card {
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -566,6 +593,9 @@
             <li>Let your son stay natural in visits. Practice separation, listening, cleanup, and answering adults, not memorized answers.</li>
             <li>Do not send extra letters unless a school explicitly allows them. Browning specifically says not to send personal or first-choice letters.</li>
           </ul>
+          <h2>Competitiveness Read</h2>
+          <p>This is a practical portfolio read, not a published admissions ranking. It assumes no sibling, no legacy, and no special institutional connection.</p>
+          <div id="competitivenessList" class="prep-list"></div>
           <h2>CCDS Notes</h2>
           <ul>
             <li>CCDS recommends a list of at least 6-8 schools with coed, single-sex, more competitive, and less competitive options.</li>
@@ -975,6 +1005,108 @@
       }
     };
 
+    const competitiveness = {
+      trinity: {
+        rank: 1,
+        level: "ultra",
+        tier: "Ultra competitive reach",
+        publishedRate: "Not published for Kindergarten",
+        planningBand: "Assume very low odds without sibling/legacy advantage.",
+        rationale: "High-demand K-12 entry, limited K seats, and Trinity notes it may not be able to meet every family.",
+        strategy: "Apply if the fit is real, but treat it as a reach and keep the list broad."
+      },
+      dalton: {
+        rank: 1,
+        level: "ultra",
+        tier: "Ultra competitive reach + age risk",
+        publishedRate: "Not published for Kindergarten",
+        planningBand: "Assume very low odds; June 21 birthday is an added risk under Dalton's summer-birthday language.",
+        rationale: "Highly demanded K entry plus Dalton's strict May 31 summer-birthday warning makes this the least predictable file in your list.",
+        strategy: "Ask Susan and Dalton before overinvesting; only proceed if they think the age/readiness profile is viable."
+      },
+      collegiate: {
+        rank: 2,
+        level: "ultra",
+        tier: "Ultra competitive reach",
+        publishedRate: "Not published for Kindergarten",
+        planningBand: "Assume very low odds without sibling/legacy advantage.",
+        rationale: "K entry to a highly selective boys' K-12 school; public page does not provide applicant/admit numbers.",
+        strategy: "Use a very specific boys' school fit story and keep several less reachy options active."
+      },
+      hunter: {
+        rank: 2,
+        level: "ultra",
+        tier: "Ultra competitive selective public",
+        publishedRate: "2027 K admit rate not confirmed from official source",
+        planningBand: "Assume extremely selective and process-driven.",
+        rationale: "Hunter is a specialized public process where screening logistics and eligibility matter more than family advocacy.",
+        strategy: "Track the official process closely and prepare gently through sleep, routines, books, puzzles, and comfort with new adults."
+      },
+      anderson: {
+        rank: 3,
+        level: "ultra",
+        tier: "Very competitive citywide public option",
+        publishedRate: "Not applicable / DOE process not yet published for Fall 2027",
+        planningBand: "Assume very competitive if K G&T entry is available.",
+        rationale: "Citywide public G&T options usually depend on DOE rules, eligibility, rank order, and seats rather than parent interviews.",
+        strategy: "Monitor DOE policy and keep P.S. 290 as a separate public-school strategy."
+      },
+      browning: {
+        rank: 4,
+        level: "high",
+        tier: "High reach",
+        publishedRate: "Not published; school publishes about 22-26 K spots",
+        planningBand: "Low odds, but less age-risk than Dalton based on current wording.",
+        rationale: "Small boys' K entry with sibling/legacy candidates considered separately; no published admit rate.",
+        strategy: "Follow instructions tightly and do not send extra first-choice or advocacy letters."
+      },
+      "allen-stevenson": {
+        rank: 5,
+        level: "high",
+        tier: "High reach / possible target if age fit is supported",
+        publishedRate: "Not published for Kindergarten",
+        planningBand: "Low odds; no sibling/legacy removes a preference advantage.",
+        rationale: "Demanded UES boys' K-8 option, with an explicit summer-birthday TK question for some families.",
+        strategy: "Ask directly whether K or Cornerstones/TK is the stronger path for a June 21 birthday."
+      },
+      town: {
+        rank: 6,
+        level: "high",
+        tier: "High-medium",
+        publishedRate: "Not published for Kindergarten",
+        planningBand: "Competitive, but should be less lottery-like than the most selective K-12 reaches.",
+        rationale: "Close UES coed Nursery-8 school; K seats depend on internal continuation and applicant pool.",
+        strategy: "Use proximity as a practical plus, but lead with program fit and classroom readiness."
+      },
+      trevor: {
+        rank: 7,
+        level: "medium",
+        tier: "Competitive target/reach",
+        publishedRate: "Not published for Kindergarten",
+        planningBand: "Competitive but more plausible than the ultra-reach group if fit is strong.",
+        rationale: "Coed progressive school with multiple entry points; public page does not publish applicant/admit numbers.",
+        strategy: "Lean into inquiry, agency, social-emotional fit, and your son's current CCDS classroom stories."
+      },
+      unis: {
+        rank: 8,
+        level: "medium",
+        tier: "Competitive fit-dependent option",
+        publishedRate: "Not published for Kindergarten",
+        planningBand: "Competitive; fit may depend strongly on international, language, and mission alignment.",
+        rationale: "UNIS has a distinctive international mission and rolling/relocation dynamics; no K admit rate is published.",
+        strategy: "Use only honest international, multilingual, or cross-cultural context; do not force the theme."
+      },
+      ps290: {
+        rank: 9,
+        level: "baseline",
+        tier: "Public baseline if zone is verified",
+        publishedRate: "Not an admit-rate process for zoned priority",
+        planningBand: "Best practical baseline if your address priority is confirmed.",
+        rationale: "For zoned public K, priority and address verification matter more than interview competitiveness.",
+        strategy: "Verify the zone in MySchools and keep documents ready."
+      }
+    };
+
     const interviewPrep = {
       trinity: {
         style: "Warm but academically serious K-12 process. Expect parent conversation plus a child visit or classroom observation. Trinity's stated themes make joy, respect, hard work, community, and learning habits more useful than achievement claims.",
@@ -1311,9 +1443,11 @@
       const filtered = schools.filter((school) => {
         const prep = interviewPrep[school.id];
         const age = ageFlags[school.id];
+        const comp = competitiveness[school.id];
         const prepText = prep ? [prep.style, prep.questions.join(" "), prep.moves.join(" ")].join(" ") : "";
         const ageText = age ? [age.label, age.text].join(" ") : "";
-        const blob = [school.name, school.address, school.materials.join(" "), school.fit, school.note, prepText, ageText].join(" ").toLowerCase();
+        const compText = comp ? [comp.tier, comp.publishedRate, comp.planningBand, comp.rationale, comp.strategy].join(" ") : "";
+        const blob = [school.name, school.address, school.materials.join(" "), school.fit, school.note, prepText, ageText, compText].join(" ").toLowerCase();
         return (kind === "all" || school.kind === kind) &&
           (gender === "all" || school.gender === gender) &&
           (status === "all" || statusFor(school) === status) &&
@@ -1329,6 +1463,7 @@
         const saved = state[school.id] || {};
         const prep = interviewPrep[school.id];
         const age = ageFlags[school.id];
+        const comp = competitiveness[school.id];
         const checks = school.materials.map((item, index) => {
           const checked = saved.checks?.[index] ? "checked" : "";
           return `<label class="check"><input type="checkbox" data-check="${school.id}:${index}" ${checked}> <span>${item}</span></label>`;
@@ -1359,6 +1494,7 @@
                   <span class="pill">${school.distance}</span>
                   <span class="pill">${school.confidence}</span>
                   <span class="pill">${school.openLabel || "Open date TBD"}</span>
+                  ${comp ? `<span class="pill">Rank ${comp.rank}: ${comp.tier}</span>` : ""}
                   ${age ? `<span class="pill">${age.label}</span>` : ""}
                 </div>
               </div>
@@ -1388,6 +1524,16 @@
                 <div class="age-note ${age.level}">
                   <h3>Summer Birthday / Age Flag</h3>
                   <p><strong>${age.label}:</strong> ${age.text}</p>
+                </div>
+              ` : ""}
+              ${comp ? `
+                <div class="competitiveness ${comp.level}">
+                  <h3>Competitiveness / Admission Rate</h3>
+                  <p><strong>Portfolio rank:</strong> ${comp.rank} - ${comp.tier}</p>
+                  <p><strong>Published K admit rate:</strong> ${comp.publishedRate}</p>
+                  <p><strong>Planning assumption:</strong> ${comp.planningBand}</p>
+                  <p><strong>Why:</strong> ${comp.rationale}</p>
+                  <p><strong>Best use:</strong> ${comp.strategy}</p>
                 </div>
               ` : ""}
               ${prepBlock}
@@ -1499,6 +1645,21 @@
     }
 
     function renderPrep() {
+      document.getElementById("competitivenessList").innerHTML = schools
+        .filter((school) => competitiveness[school.id])
+        .sort((a, b) => competitiveness[a.id].rank - competitiveness[b.id].rank || a.name.localeCompare(b.name))
+        .map((school) => {
+          const comp = competitiveness[school.id];
+          return `
+            <div class="competitiveness ${comp.level}">
+              <h3>Rank ${comp.rank}: ${school.name}</h3>
+              <p><strong>${comp.tier}</strong></p>
+              <p><strong>Published K admit rate:</strong> ${comp.publishedRate}</p>
+              <p><strong>Planning assumption:</strong> ${comp.planningBand}</p>
+            </div>
+          `;
+        }).join("");
+
       document.getElementById("prepList").innerHTML = schools.map((school) => {
         const prep = interviewPrep[school.id];
         if (!prep) return "";

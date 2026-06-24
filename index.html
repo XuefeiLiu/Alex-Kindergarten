@@ -374,6 +374,28 @@
     .monitor-card.changed { border-color: #d99a2b; background: #fff8e8; }
     .monitor-card.error { border-color: #f3a7a0; background: #fff4f2; }
 
+    .age-note {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfcff;
+    }
+
+    .age-note.risk {
+      border-color: #f3a7a0;
+      background: #fff4f2;
+    }
+
+    .age-note.watch {
+      border-color: #f0c36d;
+      background: #fff8e8;
+    }
+
+    .age-note.ok {
+      border-color: #9fd7bd;
+      background: #f1fbf6;
+    }
+
     .prep-card {
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -895,6 +917,64 @@
       ["Hunter College Elementary School", "https://www.hunterschools.org/es"]
     ];
 
+    const ageFlags = {
+      trinity: {
+        level: "watch",
+        label: "Summer birthday: eligible, watch readiness",
+        text: "Trinity says K applicants must be five by Sept 1 of the entry year. June 21, 2022 meets that for Fall 2027, but it is still a summer birthday to discuss with CCDS/Susan."
+      },
+      dalton: {
+        level: "risk",
+        label: "High age-cutoff risk",
+        text: "Dalton says K applicants must be five by Sept 1, but also says students born in June, July, or August should consult early-childhood directors and that Dalton adheres strictly to a May 31 deadline for children with summer birthdays. June 21 is after May 31, so confirm with Susan and Dalton before investing heavily."
+      },
+      collegiate: {
+        level: "verify",
+        label: "Age rule not confirmed",
+        text: "I did not find clear 2027 age-cutoff language on the Collegiate page checked. Treat June 21 as a specific question for admissions and CCDS."
+      },
+      "allen-stevenson": {
+        level: "watch",
+        label: "Summer birthday: consider TK question",
+        text: "Allen-Stevenson says boys must be five by Sept 1, 2027 and specifically tells families with summer birthdays to consider Cornerstones, its Transitional Kindergarten. June 21 meets K age, but ask whether K or TK is the better strategy."
+      },
+      trevor: {
+        level: "watch",
+        label: "Summer birthday: eligible, watch readiness",
+        text: "Trevor's K age guidance from the admissions page indicates a Sept 1 cutoff. June 21 meets that for Fall 2027, but CCDS's summer-birthday advice still applies."
+      },
+      browning: {
+        level: "watch",
+        label: "Summer birthday accepted; verify wording",
+        text: "Browning says K applicants must be five by Dec 31 and says many boys with summer birthdays are ready for K. The FAQ also contains wording that is easy to misread around age, so confirm directly with Browning for a June 21, 2022 applicant."
+      },
+      town: {
+        level: "verify",
+        label: "Age rule not found",
+        text: "Town's current dates page did not show a clear kindergarten birthdate cutoff in the checked text. Ask admissions whether June 21, 2022 is standard K entry or if they recommend waiting."
+      },
+      unis: {
+        level: "verify",
+        label: "Age rule not found",
+        text: "UNIS's checked application page did not show a clear K birthdate cutoff. Verify the Fall 2027 age rule in Ravenna or with admissions."
+      },
+      hunter: {
+        level: "verify",
+        label: "Age/process not confirmed",
+        text: "Hunter's public process and age details were not confirmed from the checked page. Keep this as a watch item until Hunter publishes the Fall 2027 kindergarten process."
+      },
+      anderson: {
+        level: "ok",
+        label: "Public K cohort eligible",
+        text: "For NYC public kindergarten, children born in 2022 are generally in the Fall 2027 K cohort. Anderson/G&T policy should still be rechecked when DOE posts the cycle."
+      },
+      ps290: {
+        level: "ok",
+        label: "Public K cohort eligible",
+        text: "For NYC public kindergarten, children born in 2022 are generally in the Fall 2027 K cohort. June 21, 2022 fits the public K year."
+      }
+    };
+
     const interviewPrep = {
       trinity: {
         style: "Warm but academically serious K-12 process. Expect parent conversation plus a child visit or classroom observation. Trinity's stated themes make joy, respect, hard work, community, and learning habits more useful than achievement claims.",
@@ -1230,8 +1310,10 @@
 
       const filtered = schools.filter((school) => {
         const prep = interviewPrep[school.id];
+        const age = ageFlags[school.id];
         const prepText = prep ? [prep.style, prep.questions.join(" "), prep.moves.join(" ")].join(" ") : "";
-        const blob = [school.name, school.address, school.materials.join(" "), school.fit, school.note, prepText].join(" ").toLowerCase();
+        const ageText = age ? [age.label, age.text].join(" ") : "";
+        const blob = [school.name, school.address, school.materials.join(" "), school.fit, school.note, prepText, ageText].join(" ").toLowerCase();
         return (kind === "all" || school.kind === kind) &&
           (gender === "all" || school.gender === gender) &&
           (status === "all" || statusFor(school) === status) &&
@@ -1246,6 +1328,7 @@
       grid.innerHTML = filtered.map((school) => {
         const saved = state[school.id] || {};
         const prep = interviewPrep[school.id];
+        const age = ageFlags[school.id];
         const checks = school.materials.map((item, index) => {
           const checked = saved.checks?.[index] ? "checked" : "";
           return `<label class="check"><input type="checkbox" data-check="${school.id}:${index}" ${checked}> <span>${item}</span></label>`;
@@ -1276,6 +1359,7 @@
                   <span class="pill">${school.distance}</span>
                   <span class="pill">${school.confidence}</span>
                   <span class="pill">${school.openLabel || "Open date TBD"}</span>
+                  ${age ? `<span class="pill">${age.label}</span>` : ""}
                 </div>
               </div>
               <div class="deadline">
@@ -1300,6 +1384,12 @@
                   <p><strong>Research note:</strong> ${school.note}</p>
                 </div>
               </div>
+              ${age ? `
+                <div class="age-note ${age.level}">
+                  <h3>Summer Birthday / Age Flag</h3>
+                  <p><strong>${age.label}:</strong> ${age.text}</p>
+                </div>
+              ` : ""}
               ${prepBlock}
               <div>
                 <h3>Your Notes</h3>

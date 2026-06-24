@@ -1,16 +1,16 @@
 {
-  "checkedAt": "2026-06-24T02:59:14.191Z",
+  "checkedAt": "2026-06-24T03:07:27.377Z",
   "changedCount": 0,
   "errorCount": 0,
   "schools": [
     {
       "name": "Trinity School admissions/events",
       "url": "https://www.trinityschoolnyc.org/admissions/admissions-k-4",
-      "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
+      "status": "unchanged",
+      "checkedAt": "2026-06-24T03:07:27.377Z",
       "httpStatus": 200,
       "hash": "0013a007aa1f1ec6971c59dd5d96c0c7b2d54501ddf607dbf4cb738ab99cf617",
-      "previousHash": null,
+      "previousHash": "0013a007aa1f1ec6971c59dd5d96c0c7b2d54501ddf607dbf4cb738ab99cf617",
       "hints": [
         "Learn More Admissions Welcome Admissions K-4 Admissions 5-12 Tuition, Fees & Financial Aid Meet Our Team List of 1 items.",
         "Alumni Get Involved Reunion Weekend 2026 Alumni Day Trinity Alumni Store Class Notes List of 1 items.",
@@ -25,11 +25,11 @@
     {
       "name": "The Dalton School admissions",
       "url": "https://www.dalton.org/apply/steps-to-apply",
-      "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
+      "status": "unchanged",
+      "checkedAt": "2026-06-24T03:07:27.377Z",
       "httpStatus": 200,
       "hash": "7c68b6e974bfd7e5a04c40756e5cfbd5914770ce2befad2f59f2017357b7f9cb",
-      "previousHash": null,
+      "previousHash": "7c68b6e974bfd7e5a04c40756e5cfbd5914770ce2befad2f59f2017357b7f9cb",
       "hints": [
         "Apply Online The Dalton School on Instagram The Dalton School on Facebook The Dalton School on LinkedIn The Dalton School on Vimeo Apply Steps to Apply Apply to Dalton Steps to Apply Affording Dalton Meet the Team First Program Kindergar...",
         "In order to apply to Kindergarten, all children must be 5 years old by September 1 of the year they enter Kindergarten.",
@@ -44,11 +44,11 @@
     {
       "name": "Collegiate School admissions",
       "url": "https://www.collegiateschool.org/admissions/apply-to-kindergarten",
-      "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
+      "status": "unchanged",
+      "checkedAt": "2026-06-24T03:07:27.377Z",
       "httpStatus": 200,
       "hash": "b984ba930433ec3402782498f07c7e7ea8d38c2558f62e9a077f8a07dab87a78",
-      "previousHash": null,
+      "previousHash": "b984ba930433ec3402782498f07c7e7ea8d38c2558f62e9a077f8a07dab87a78",
       "hints": [
         "Please see below the steps required for completing your application.",
         "Applicants to Kindergarten can begin the application process immediately.",
@@ -63,11 +63,11 @@
     {
       "name": "The Allen-Stevenson School admissions",
       "url": "https://www.allen-stevenson.org/admissions/apply",
-      "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
+      "status": "unchanged",
+      "checkedAt": "2026-06-24T03:07:27.377Z",
       "httpStatus": 200,
       "hash": "f2d5183a12aa930fa7bea2dcb93ec0904d45d2d7a887c48c9e34f9d47249c00f",
-      "previousHash": null,
+      "previousHash": "f2d5183a12aa930fa7bea2dcb93ec0904d45d2d7a887c48c9e34f9d47249c00f",
       "hints": [
         "A-S Application FAQ Are seasonal tours available for prospective parents?",
         "Yes, we offer spring tours in April and May and fall tours with the submission of an application.",
@@ -82,11 +82,11 @@
     {
       "name": "The Allen-Stevenson School visits/events",
       "url": "https://www.allen-stevenson.org/admissions/visit-and-meet-us",
-      "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
+      "status": "unchanged",
+      "checkedAt": "2026-06-24T03:07:27.377Z",
       "httpStatus": 200,
       "hash": "8ad9b412efec30320b3b4da4b7a4e96e8fc077a58c4db20f0460d182f854c44e",
-      "previousHash": null,
+      "previousHash": "8ad9b412efec30320b3b4da4b7a4e96e8fc077a58c4db20f0460d182f854c44e",
       "hints": [
         "Fall Tours Applications for the 2027-2028 school year go live on August 27, 2026 .",
         "After submitting an application, prospective parents will have a parent-led tour of the School.",
@@ -101,11 +101,11 @@
     {
       "name": "Trevor Day School admissions/events",
       "url": "https://www.trevor.org/admissions/apply-to-lower-school-ps-5",
-      "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
+      "status": "unchanged",
+      "checkedAt": "2026-06-24T03:07:27.377Z",
       "httpStatus": 200,
       "hash": "eae4fad8c4134312e4ec1afd24385ba230733fd4aad746ed73d27ffd29a68114",
-      "previousHash": null,
+      "previousHash": "eae4fad8c4134312e4ec1afd24385ba230733fd4aad746ed73d27ffd29a68114",
       "hints": [
         "So much lies ahead!&#160; &#160; Warmly, &#160; The Lower School Admissions Team Preschool&#8211;Grade 5 1 West 88th Street, New York, NY 10024 Applicants for Entry in Fall 2027 The application deadline for the 2026-2027 school year has ...",
         "Applications for the 2027-2028 school year will be available on Ravenna in mid to late August.&#160; Our fall tours run from October to December on Thursdays at 9:00 am.",
@@ -120,11 +120,11 @@
     {
       "name": "The Browning School admissions/events",
       "url": "https://browning.edu/admission",
-      "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
+      "status": "unchanged",
+      "checkedAt": "2026-06-24T03:07:27.377Z",
       "httpStatus": 200,
       "hash": "da5d087430b61af07cf92b81a59c84e4a3a2fc5b2de101927dfc995f1e4989ba",
-      "previousHash": null,
+      "previousHash": "da5d087430b61af07cf92b81a59c84e4a3a2fc5b2de101927dfc995f1e4989ba",
       "hints": [
         "Admission FAQs WHAT IS THE APPLICATION FEE?",
         "A non-refundable application fee of $75 must accompany each application.",
@@ -139,11 +139,11 @@
     {
       "name": "The Town School dates/events",
       "url": "https://www.thetownschool.org/admissions/important-dates-and-events",
-      "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
+      "status": "unchanged",
+      "checkedAt": "2026-06-24T03:07:27.377Z",
       "httpStatus": 200,
       "hash": "0ce1e02d59ea323d34072e9d3408bcc00cea74e5c161be60b714628bbf345a3b",
-      "previousHash": null,
+      "previousHash": "0ce1e02d59ea323d34072e9d3408bcc00cea74e5c161be60b714628bbf345a3b",
       "hints": [
         "Interested in the 2027-28 school year?",
         "If you are interested in the 2026-2027 school year, please contact our Admissions Office directly at admissions@townschool.org ."
@@ -152,11 +152,11 @@
     {
       "name": "United Nations International School admissions",
       "url": "https://www.unis.org/admissions/apply",
-      "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
+      "status": "unchanged",
+      "checkedAt": "2026-06-24T03:07:27.377Z",
       "httpStatus": 200,
       "hash": "c56a759f921aeaa83d47ac3bfcd3661ad1375ed7bc73a49e78ebe0a18e15120f",
-      "previousHash": null,
+      "previousHash": "c56a759f921aeaa83d47ac3bfcd3661ad1375ed7bc73a49e78ebe0a18e15120f",
       "hints": [
         "Strategic Plan 2025-2030 Admissions Admissions The Admissions section has information about the application process, including deadlines, application requirements, and answers to frequently asked questions.",
         "The Admissions Department is happy to answer any questions a family has about UNIS and our application process.",
@@ -169,41 +169,26 @@
       ]
     },
     {
-      "name": "United Nations International School tours/open houses",
-      "url": "https://www.unis.org/admissions/tours-open-houses",
+      "name": "Hunter College Campus Schools",
+      "url": "https://www.hunterschools.org/",
       "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
-      "httpStatus": 404,
-      "hash": "69c60605f6e25f5eba7a7864e788683dd3dc29d133ab8df2b2e27fb9e25e28aa",
+      "checkedAt": "2026-06-24T03:07:27.377Z",
+      "httpStatus": 200,
+      "hash": "71c3dcb9ad3e62a0ba472784d2894f3e2d76e57f32b36b8247b3401b258b5649",
       "previousHash": null,
       "hints": [
-        "Strategic Plan 2025-2030 Admissions Admissions The Admissions section has information about the application process, including deadlines, application requirements, and answers to frequently asked questions.",
-        "The Admissions Department is happy to answer any questions a family has about UNIS and our application process.",
-        "Admissions Apply Tours & Open Houses FAQs Financial Aid Tuition & Fees 2025-2026 Tuition & Fees 2026-2027 Contacts & Location Academics Academics The United Nations International School offers a rigorous, age-appropriate, and culturally ...",
-        "School Life Travel Programs Environmental Programs & Camps Student Clubs & Conferences The UN & UNIS Community Service Care, After School & Camps Parents' Association Food at UNIS Alumni Alumni Welcome UNIS Alumni!",
-        "This page is designed for alumni, parents of alumni and former faculty and staff."
-      ]
-    },
-    {
-      "name": "Hunter College Elementary School",
-      "url": "https://www.hunterschools.org/es",
-      "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
-      "httpStatus": 404,
-      "hash": "202f059a46e2ce43a39da543eaaf4e405357708431871c82adf7be84ed0397f4",
-      "previousHash": null,
-      "hints": [
-        "The most likely causes of this message are: You may be trying to access a page during our maintenance window."
+        "ELEMENTARY SCHOOL NEWS Kindergarten Students Shine at Final Assembly 6/22/2026 A Celebration of Good 6/16/2026 NDI's 50th Anniversary From Campus to Community: A Collaborative Planting Project 6/11/2026 HCES Celebrates Community at Annua...",
+        "1 / 5 Elementary School News Archive HIGH SCHOOL NEWS Hunter College High School Alumni Association Celebrates a Legacy of Excellence 6/22/2026 HCHSAA Reunion 2026 Hunter Student Attempts to Set New Guinness World Record 6/22/2026 Sean K."
       ]
     },
     {
       "name": "NYC DOE Kindergarten",
       "url": "https://www.schools.nyc.gov/enrollment/enroll-grade-by-grade/kindergarten",
-      "status": "new",
-      "checkedAt": "2026-06-24T02:59:14.191Z",
+      "status": "unchanged",
+      "checkedAt": "2026-06-24T03:07:27.377Z",
       "httpStatus": 200,
       "hash": "4f2c0954b73e7a6f3b95b466163366a8b04f8b0cd55f62b1851965c71b6a5fb9",
-      "previousHash": null,
+      "previousHash": "4f2c0954b73e7a6f3b95b466163366a8b04f8b0cd55f62b1851965c71b6a5fb9",
       "hints": [
         "Families who applied by the January 23 deadline can access their offer in one of the following ways: go to MySchools.nyc call 718-935-2009 contact a Family Welcome Center Accept your offer by May 1s t to secure your Kindergarten seat.",
         "If your child was born in 2021 and lives in New York City, they are eligible to attend kindergarten in fall 2026.",

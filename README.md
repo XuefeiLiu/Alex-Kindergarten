@@ -4,12 +4,20 @@ Static kindergarten application tracker for Fall 2027 NYC applications.
 
 ## Publish with GitHub Pages
 
-This repo includes a GitHub Actions workflow that deploys the static site to GitHub Pages from the `main` branch.
+This repo is a static site that can be published with GitHub Pages from the `main` branch.
 
 Public URL:
 
 https://xuefeiliu.github.io/Alex-Kindergarten/
 
-If the workflow does not run automatically, open the repo on GitHub, go to Actions, select "Deploy static site to GitHub Pages", and run it manually.
+To turn it on:
+
+1. Open https://github.com/XuefeiLiu/Alex-Kindergarten/settings/pages
+2. Under "Build and deployment", choose "Deploy from a branch".
+3. Select branch `main`.
+4. Select folder `/ (root)`.
+5. Save.
+
+GitHub usually publishes the URL within a minute or two after saving.
 
 The tracker saves checkbox and note data in each viewer's browser local storage. Other people will see the same page, but they will not see your private local notes.

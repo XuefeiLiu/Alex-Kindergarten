@@ -18,15 +18,39 @@ const targets = [
 const outputPath = new URL("../data/admissions-monitor.json", import.meta.url);
 const dateWords = "January|February|March|April|May|June|July|August|September|October|November|December|Jan\\.?|Feb\\.?|Mar\\.?|Apr\\.?|Jun\\.?|Jul\\.?|Aug\\.?|Sept\\.?|Sep\\.?|Oct\\.?|Nov\\.?|Dec\\.?";
 const signalPattern = new RegExp(`(announcement|news|event|register|registration|webinar|information session|info session|roundtable|workshop|application|deadline|tour|open house|interview|parent|visit|assessment|financial aid|Ravenna|ISAAGNY|2026|2027|${dateWords})`, "i");
+const boilerplatePattern = /(warmly|privacy policy|cookie policy|quicklinks|skip to main content|open menu|close menu|search|type on the line above|all rights reserved|contact us|street, new york|follow us|facebook|instagram|linkedin|learn more|list of|alumni|get involved|reunion|class notes|tuition, fees|meet our team|welcome admissions|home admissions|calendar, news|media calendar|trinity fund|making a stock gift|support trinity|annual fund|planned giving|lgbtq\+ inclusion)/i;
+
+function decodeEntities(text) {
+  const named = {
+    nbsp: " ",
+    amp: "&",
+    lt: "<",
+    gt: ">",
+    quot: '"',
+    apos: "'",
+    rsquo: "'",
+    lsquo: "'",
+    rdquo: '"',
+    ldquo: '"',
+    ndash: "-",
+    mdash: "-",
+    hellip: "..."
+  };
+
+  return text
+    .replace(/&#(\d+);/g, (_, value) => String.fromCodePoint(Number(value)))
+    .replace(/&#x([a-f0-9]+);/gi, (_, value) => String.fromCodePoint(Number.parseInt(value, 16)))
+    .replace(/&([a-z]+);/gi, (match, value) => named[value.toLowerCase()] ?? match);
+}
 
 function normalizeHtml(html) {
-  return html
+  return decodeEntities(html)
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<noscript[\s\S]*?<\/noscript>/gi, " ")
+    .replace(/<\/(p|li|h[1-6]|div|tr|section|article)>/gi, ". ")
     .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
+    .replace(/\s+\.\s+/g, ". ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -39,12 +63,24 @@ function extractHints(text) {
   const chunks = text
     .split(/(?<=[.!?])\s+|\s{2,}/)
     .map((part) => part.trim())
-    .filter((part) => part.length > 30 && part.length < 350)
-    .filter((part) => signalPattern.test(part));
+    .map((part) => part.replace(/\s+/g, " "))
+    .filter((part) => part.length > 30 && part.length < 280)
+    .filter((part) => signalPattern.test(part))
+    .filter((part) => !boilerplatePattern.test(part))
+    .filter((part) => /[.!?]$|\b(2026|2027|deadline|opens?|due|schedule|required|optional|must|available|register|tour|visit|interview|assessment)\b/i.test(part))
+    .map((part) => {
+      const cleaned = part
+        .replace(/\bAdmissions\s+Admissions\b/gi, "Admissions")
+        .replace(/\bApplication\s+Application\b/gi, "Application")
+        .replace(/\bApply\s+Apply\b/gi, "Apply")
+        .replace(/\.\.+/g, ".")
+        .trim();
+      return cleaned.length > 220 ? `${cleaned.slice(0, 217)}...` : cleaned;
+    });
 
   return [...new Set(chunks)]
     .slice(0, 8)
-    .map((part) => part.length > 240 ? `${part.slice(0, 237)}...` : part);
+    .map((part) => `Check: ${part}`);
 }
 
 async function readPrevious() {

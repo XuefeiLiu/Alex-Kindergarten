@@ -356,6 +356,24 @@
 
     .source-list a { color: var(--blue); }
 
+    .monitor-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .monitor-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcff;
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .monitor-card.changed { border-color: #d99a2b; background: #fff8e8; }
+    .monitor-card.error { border-color: #f3a7a0; background: #fff4f2; }
+
     .prep-card {
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -389,6 +407,7 @@
     @media (max-width: 900px) {
       .hero, .statement-grid, .public-grid, .prep-grid { grid-template-columns: 1fr; }
       .school-grid { grid-template-columns: 1fr; }
+      .monitor-grid { grid-template-columns: 1fr; }
       .snapshot { grid-template-columns: 1fr 1fr 1fr; }
     }
 
@@ -423,6 +442,7 @@
       <button class="tab" data-tab="statements">Statements</button>
       <button class="tab" data-tab="prep">Interview Prep</button>
       <button class="tab" data-tab="public">Public Schools</button>
+      <button class="tab" data-tab="official">Official Updates</button>
       <button class="tab" data-tab="sources">Sources</button>
     </div>
   </nav>
@@ -548,6 +568,15 @@
         <h2>Sources and Confidence</h2>
         <p>Confirmed means the school page currently lists the 2027-2028 date or a cycle-specific requirement. Historical means the page lists 2026-2027 dates only. Projected means I am using it as a reminder date, not as a deadline you should trust.</p>
         <ul id="sourceList" class="source-list"></ul>
+      </div>
+    </section>
+
+    <section id="official" class="section">
+      <div class="panel stack">
+        <h2>Official Page Monitor</h2>
+        <p class="lede">GitHub checks official admissions, tour, open-house, and announcement pages daily and updates this section when source pages change. Treat this as an alert system: review changed schools before trusting a new deadline.</p>
+        <div id="officialSummary" class="warning">Loading official-page monitor...</div>
+        <div id="officialUpdates" class="monitor-grid"></div>
       </div>
     </section>
   </main>
@@ -1068,8 +1097,96 @@
       }
     ];
 
+    const visitEvents = [
+      {
+        date: "2026-07-01T09:00:00-04:00",
+        title: "Spring tour follow-up",
+        body: "Review any spring/virtual tour notes and ask CCDS/Susan whether your list needs a safer or more balanced school added.",
+        confidence: "teacher note"
+      },
+      {
+        date: "2026-08-10T09:30:00-04:00",
+        title: "Browning",
+        body: "Submit early and schedule the school tour and parent conversation; Browning says appointments fill first-come, first-served.",
+        confidence: "confirmed"
+      },
+      {
+        date: "2026-08-13T12:30:00-04:00",
+        title: "Dalton",
+        body: "After submitting, watch for Admissions to call about parent interview, parent tour, and child assessment; allow several weeks.",
+        confidence: "confirmed"
+      },
+      {
+        date: "2026-08-21T09:30:00-04:00",
+        title: "Town",
+        body: "Submit inquiry/application and watch for Admissions Open House, Book Fair, Speaker Series, Financial Aid info session, and Parent Ambassador Roundtables.",
+        confidence: "confirmed / TBA"
+      },
+      {
+        date: "2026-08-27T09:30:00-04:00",
+        title: "Allen-Stevenson",
+        body: "After applying, register in Ravenna for Parent Tour, Parent Interview, applicant visit, and optional admissions events.",
+        confidence: "confirmed"
+      },
+      {
+        date: "2026-09-01T09:30:00-04:00",
+        title: "UNIS",
+        body: "Create or update Ravenna account; after applying, register for tour and assessment. UNIS says parents attend a teacher panel during the student assessment.",
+        confidence: "confirmed"
+      },
+      {
+        date: "2026-09-02T09:30:00-04:00",
+        title: "Collegiate",
+        body: "After applying, schedule required virtual parent interview, required applicant visit, and optional group parent tour as early as possible.",
+        confidence: "historical"
+      },
+      {
+        date: "2026-09-08T09:30:00-04:00",
+        title: "Trinity",
+        body: "Apply and watch email for appointment invitations. Trinity says it cannot meet every family and visits/interviews run early Oct through early Jan.",
+        confidence: "confirmed"
+      },
+      {
+        date: "2026-09-15T09:00:00-04:00",
+        title: "Trinity Open House",
+        body: "Prospective Kindergarten Open House and Parent Reception: September 2026, exact date TBA.",
+        confidence: "confirmed / TBA"
+      },
+      {
+        date: "2026-10-01T09:00:00-04:00",
+        title: "Trinity parent events",
+        body: "Watch for Parent-to-Parent Roundtable and Financial Aid virtual workshop; both listed for October 2026, dates TBA.",
+        confidence: "confirmed / TBA"
+      },
+      {
+        date: "2026-10-01T09:30:00-04:00",
+        title: "Trevor",
+        body: "Required appointments window starts: schedule tour, child visit, and adult meeting for October-December 2026.",
+        confidence: "confirmed"
+      },
+      {
+        date: "2026-10-15T09:00:00-04:00",
+        title: "Public school visits",
+        body: "Visit or virtually tour P.S. 290 and monitor DOE/MySchools for Fall 2027 public K and G&T updates.",
+        confidence: "teacher note / projected"
+      },
+      {
+        date: "2026-11-02T09:00:00-05:00",
+        title: "Trinity Equity & Community Event",
+        body: "Equity, Inclusion and Community Event listed for November 2026, exact date TBA.",
+        confidence: "confirmed / TBA"
+      },
+      {
+        date: "2026-11-15T09:00:00-05:00",
+        title: "Appointment audit",
+        body: "Confirm every school has completed or scheduled required parent tour, interview/conversation, child visit, and optional events you care about.",
+        confidence: "planning"
+      }
+    ];
+
     const storeKey = "kinder-tracker-v1";
     const state = JSON.parse(localStorage.getItem(storeKey) || "{}");
+    let monitorTimelineItems = [];
 
     function save() {
       localStorage.setItem(storeKey, JSON.stringify(state));
@@ -1196,7 +1313,7 @@
 
     function renderTimeline() {
       const timeline = document.getElementById("timelineList");
-      const items = processEvents.concat(schools
+      const items = processEvents.concat(visitEvents, monitorTimelineItems, schools
         .flatMap((school) => [
           school.openDate ? { date: school.openDate, title: school.name, body: school.openLabel, confidence: school.confidence } : null,
           { date: school.deadline, title: school.name, body: school.deadlineLabel, confidence: school.confidence },
@@ -1229,6 +1346,66 @@
 
     function renderSources() {
       document.getElementById("sourceList").innerHTML = sources.map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener">${label}</a></li>`).join("");
+    }
+
+    function formatCheckedAt(value) {
+      if (!value) return "Not checked yet";
+      return new Date(value).toLocaleString(undefined, {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      });
+    }
+
+    function renderOfficialUpdates(data) {
+      const summary = document.getElementById("officialSummary");
+      const updates = document.getElementById("officialUpdates");
+      const schools = data.schools || [];
+      const changed = schools.filter((school) => school.status === "changed");
+      const errors = schools.filter((school) => school.status === "error");
+
+      summary.textContent = `Last checked: ${formatCheckedAt(data.checkedAt)}. Changed pages: ${changed.length}. Check errors: ${errors.length}.`;
+      updates.innerHTML = schools.map((school) => {
+        const hints = school.hints?.length
+          ? `<ul>${school.hints.map((hint) => `<li>${escapeHtml(hint)}</li>`).join("")}</ul>`
+          : "<p>No date/tour/deadline hints extracted yet.</p>";
+        return `
+          <div class="monitor-card ${school.status}">
+            <div class="meta">
+              <span class="pill">${school.status}</span>
+              <span class="pill">HTTP ${school.httpStatus || "n/a"}</span>
+            </div>
+            <h3>${school.name}</h3>
+            <a href="${school.url}" target="_blank" rel="noopener">Official page</a>
+            ${school.error ? `<p><strong>Check error:</strong> ${escapeHtml(school.error)}</p>` : ""}
+            ${hints}
+          </div>
+        `;
+      }).join("");
+    }
+
+    async function loadOfficialUpdates() {
+      try {
+        const response = await fetch("data/admissions-monitor.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        const checkedAt = data.checkedAt || new Date().toISOString();
+        monitorTimelineItems = (data.schools || [])
+          .filter((school) => school.status === "changed")
+          .map((school) => ({
+            date: checkedAt,
+            title: school.name,
+            body: "Official admissions or announcement page changed; review extracted hints in Official Updates.",
+            confidence: "monitor"
+          }));
+        renderOfficialUpdates(data);
+        renderTimeline();
+      } catch (error) {
+        document.getElementById("officialSummary").textContent =
+          `Official monitor is not available in this browser session yet (${error.message}). It will work from the published GitHub Pages site after the monitor file exists.`;
+      }
     }
 
     function renderPrep() {
@@ -1380,6 +1557,7 @@ Editing notes before submitting:
     renderSources();
     renderPrep();
     renderStatement();
+    loadOfficialUpdates();
     updateMetrics();
     setInterval(() => {
       renderSchools();

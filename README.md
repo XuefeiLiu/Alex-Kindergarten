@@ -21,3 +21,5 @@ To turn it on:
 GitHub usually publishes the URL within a minute or two after saving.
 
 The tracker saves checkbox and note data in each viewer's browser local storage. Other people will see the same page, but they will not see your private local notes.
+
+The repository also includes a scheduled GitHub Action that checks official admissions, tour, open-house, and announcement pages daily. It updates `data/admissions-monitor.json`, which powers the "Official Updates" tab on the site.

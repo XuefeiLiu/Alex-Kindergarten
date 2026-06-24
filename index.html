@@ -1,0 +1,1390 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kindergarten Application Tracker</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1d2433;
+      --muted: #667085;
+      --line: #d8dee8;
+      --paper: #f7f8fb;
+      --panel: #ffffff;
+      --blue: #2f5d8c;
+      --green: #2f7d5b;
+      --gold: #946c20;
+      --rose: #a14c5b;
+      --red: #b42318;
+      --shadow: 0 12px 30px rgba(29, 36, 51, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.45;
+    }
+
+    header {
+      background: #fbfcff;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      padding: 34px 0 28px;
+      align-items: end;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .snapshot {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      min-height: 90px;
+    }
+
+    .metric b {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .metric span { color: var(--muted); font-size: 13px; }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(247, 248, 251, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      padding: 10px 0;
+      overflow-x: auto;
+    }
+
+    .tab {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      border-radius: 7px;
+      padding: 9px 12px;
+      font: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      border-color: var(--line);
+      color: var(--ink);
+      background: var(--panel);
+    }
+
+    main { padding: 24px 0 48px; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    select, input, textarea {
+      font: inherit;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 9px 10px;
+      background: var(--panel);
+      color: var(--ink);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 104px;
+      resize: vertical;
+    }
+
+    .search { min-width: min(320px, 100%); }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .school-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .school {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .school-head {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: start;
+      border-left: 5px solid var(--blue);
+    }
+
+    .school[data-kind="public"] .school-head { border-left-color: var(--green); }
+    .school[data-gender="girls"] .school-head { border-left-color: var(--rose); }
+    .school[data-gender="boys"] .school-head { border-left-color: var(--gold); }
+
+    .school h2 {
+      margin: 0 0 4px;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 8px;
+      background: #fbfcff;
+    }
+
+    .deadline {
+      text-align: right;
+      min-width: 140px;
+    }
+
+    .deadline strong {
+      display: block;
+      font-size: 18px;
+    }
+
+    .deadline small {
+      color: var(--muted);
+      display: block;
+    }
+
+    .school-body {
+      padding: 0 16px 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    li { margin: 5px 0; }
+
+    label.check {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin: 8px 0;
+      color: #344054;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    a.button, button.button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 38px;
+      border: 1px solid var(--blue);
+      background: var(--blue);
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 11px;
+      border-radius: 7px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    a.secondary, button.secondary {
+      background: #fff;
+      color: var(--blue);
+      border-color: var(--line);
+    }
+
+    .note-field {
+      min-height: 78px;
+      font-size: 14px;
+    }
+
+    .warning {
+      border: 1px solid #f0c36d;
+      background: #fff8e8;
+      border-radius: 8px;
+      padding: 12px;
+      color: #6b4b0f;
+      margin-bottom: 16px;
+    }
+
+    .statement-grid, .public-grid, .prep-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .field-grid label, .stack label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .draft {
+      white-space: pre-wrap;
+      background: #fbfcff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 220px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline-item:last-child { border-bottom: 0; }
+
+    .date-badge {
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .source-list a { color: var(--blue); }
+
+    .prep-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fbfcff;
+      display: grid;
+      gap: 10px;
+    }
+
+    .prep-card h3 {
+      color: var(--ink);
+      font-size: 18px;
+      text-transform: none;
+      letter-spacing: 0;
+      margin: 0;
+    }
+
+    .prep-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .empty {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .hero, .statement-grid, .public-grid, .prep-grid { grid-template-columns: 1fr; }
+      .school-grid { grid-template-columns: 1fr; }
+      .snapshot { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 20px, 1180px); }
+      .snapshot { grid-template-columns: 1fr; }
+      .school-head, .row, .field-grid, .timeline-item { grid-template-columns: 1fr; }
+      .deadline { text-align: left; }
+      .search { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div>
+        <h1>Kindergarten Application Tracker</h1>
+        <p class="lede">A working dashboard for your son's Fall 2027 kindergarten applications from CCDS private Pre-K. Dates are labeled by confidence so you can act early without treating guesses as facts.</p>
+      </div>
+      <div class="snapshot" aria-label="Tracker summary">
+        <div class="metric"><b id="countSchools">0</b><span>schools tracked</span></div>
+        <div class="metric"><b id="nextDays">--</b><span>days to next tracked date</span></div>
+        <div class="metric"><b id="doneCount">0</b><span>tasks checked off</span></div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="wrap tabs">
+      <button class="tab active" data-tab="tracker">Tracker</button>
+      <button class="tab" data-tab="timeline">Timeline</button>
+      <button class="tab" data-tab="statements">Statements</button>
+      <button class="tab" data-tab="prep">Interview Prep</button>
+      <button class="tab" data-tab="public">Public Schools</button>
+      <button class="tab" data-tab="sources">Sources</button>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section id="tracker" class="section active">
+      <div class="warning">
+        Address-zone warning: You identified P.S. 290 Manhattan New School as your public district/zoned school. Still verify 345 E 80 Street in MySchools before relying on any public-school label here.
+      </div>
+      <div class="toolbar">
+        <input id="search" class="search" type="search" placeholder="Search school, material, fit note">
+        <div class="controls">
+          <select id="kindFilter" aria-label="School type">
+            <option value="all">All types</option>
+            <option value="private">Private</option>
+            <option value="public">Public</option>
+          </select>
+          <select id="genderFilter" aria-label="School model">
+            <option value="all">All models</option>
+            <option value="coed">Coed</option>
+            <option value="girls">Girls</option>
+            <option value="boys">Boys</option>
+          </select>
+          <select id="statusFilter" aria-label="Task status">
+            <option value="all">All statuses</option>
+            <option value="open">Still open</option>
+            <option value="urgent">Due within 30 days</option>
+            <option value="complete">Marked applied</option>
+          </select>
+        </div>
+      </div>
+      <div id="schoolGrid" class="school-grid"></div>
+    </section>
+
+    <section id="timeline" class="section">
+      <div class="panel">
+        <h2>Application Timeline</h2>
+        <div id="timelineList" class="timeline"></div>
+      </div>
+    </section>
+
+    <section id="statements" class="section">
+      <div class="statement-grid">
+        <div class="panel stack">
+          <h2>Child Profile</h2>
+          <p class="lede">Fill this in once. The draft updates locally in your browser; nothing is sent anywhere.</p>
+          <div class="field-grid">
+            <label>Child name<input id="childName" data-profile="name" placeholder="First name"></label>
+            <label>Pronouns<input id="pronouns" data-profile="pronouns" placeholder="he/him"></label>
+            <label>Current school<input id="currentSchool" data-profile="currentSchool" placeholder="CCDS private Pre-K"></label>
+          </div>
+          <label>Three concrete traits<textarea id="traits" data-profile="traits" placeholder="curious about how things work; warm with younger children; persistent with puzzles"></textarea></label>
+          <label>Specific stories<textarea id="stories" data-profile="stories" placeholder="A small moment that shows kindness, curiosity, resilience, humor, or independence."></textarea></label>
+          <label>Family hopes<textarea id="hopes" data-profile="hopes" placeholder="What kind of classroom and community will help your child thrive?"></textarea></label>
+          <label>School angle<select id="schoolAngle">
+            <option value="general">General parent statement</option>
+          </select></label>
+        </div>
+        <div class="panel">
+          <h2>Draft Statement</h2>
+          <div id="statementDraft" class="draft"></div>
+          <div class="actions" style="margin-top:12px">
+            <button id="copyDraft" class="button">Copy draft</button>
+            <button id="resetProfile" class="button secondary">Reset profile</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="public" class="section">
+      <div class="public-grid">
+        <div class="panel">
+          <h2>Public-School Notes</h2>
+          <p>Your son's birthday is June 21, 2022, so he turns five in calendar year 2027 and is in the Fall 2027 kindergarten cohort for NYC public kindergarten. DOE has not yet posted the Fall 2027 application dates on the page I checked, so the public-school timers are conservative reminders to re-check.</p>
+          <ul>
+            <li>Verify P.S. 290 Manhattan New School by entering 345 E 80 Street in MySchools or NYC School Search.</li>
+            <li>List the true zoned school first on the public K application if it is your preferred option.</li>
+            <li>Consider nearby non-zoned District 2 choices only after checking admissions priorities in MySchools.</li>
+            <li>Keep birth certificate, immunization record, and proof-of-address documents ready for enrollment after an offer.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h2>Nearby Public Options to Verify</h2>
+          <div id="publicList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="prep" class="section">
+      <div class="prep-grid">
+        <div class="panel">
+          <h2>Selection Strategy</h2>
+          <p>These are the controllable things that can improve your odds without trying to game the process.</p>
+          <ul>
+            <li>Apply early enough to get good interview, tour, and child-visit slots.</li>
+            <li>Ask CCDS early how they handle ISAAGNY reports and what dates they need from you.</li>
+            <li>Prepare three specific stories: curiosity, kindness or friendship, and frustration or resilience.</li>
+            <li>Use school-specific reasons tied to the program, not prestige or generic "best school" language.</li>
+            <li>Let your son stay natural in visits. Practice separation, listening, cleanup, and answering adults, not memorized answers.</li>
+            <li>Do not send extra letters unless a school explicitly allows them. Browning specifically says not to send personal or first-choice letters.</li>
+          </ul>
+          <h2>CCDS Notes</h2>
+          <ul>
+            <li>CCDS recommends a list of at least 6-8 schools with coed, single-sex, more competitive, and less competitive options.</li>
+            <li>Have a parent-statement draft ready by Labor Day; keep it to about one page with one or two concrete anecdotes.</li>
+            <li>Practice executive-function basics: greeting adults, waiting, cooperation, simple directions, adult-led activities for 10-15 minutes, and sleep routine.</li>
+            <li>CCDS says school reports are handled by the school; your job is to sign any release forms promptly.</li>
+            <li>For recommendations, use them only if requested. CCDS notes that board, Parents' Association, or alumni recommendations carry more weight.</li>
+            <li>Finalize top-three and first-choice strategy in December or January, and speak with Susan before telling a school it is first choice.</li>
+            <li>Summer birthday caution: your son turns four on June 21, 2026 and five on June 21, 2027. CCDS advises discussing summer birthdays carefully before applying out.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h2>School Interview Styles</h2>
+          <p class="lede">These are practice prompts and likely question types, not guaranteed past questions. Exact questions change and are not always public.</p>
+          <div id="prepList" class="prep-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sources" class="section">
+      <div class="panel">
+        <h2>Sources and Confidence</h2>
+        <p>Confirmed means the school page currently lists the 2027-2028 date or a cycle-specific requirement. Historical means the page lists 2026-2027 dates only. Projected means I am using it as a reminder date, not as a deadline you should trust.</p>
+        <ul id="sourceList" class="source-list"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const schools = [
+      {
+        id: "trinity",
+        name: "Trinity School",
+        kind: "private",
+        gender: "coed",
+        address: "139 West 91st Street",
+        grades: "K-12",
+        openDate: "2026-09-08T09:00:00-04:00",
+        openLabel: "Application opens Sept 8, 2026",
+        deadline: "2027-01-08T23:59:00-05:00",
+        deadlineLabel: "File-completion target in early Jan; re-check ISAAGNY date",
+        confidence: "mixed",
+        apply: "https://www.ravenna-hub.com/",
+        source: "https://www.trinityschoolnyc.org/admissions/admissions-k-4",
+        distance: "Crosstown",
+        materials: [
+          "Ravenna application and fee",
+          "Parent/guardian visit or interview events",
+          "Child visit and classroom observation",
+          "ISAAGNY confidential school report from CCDS",
+          "Optional 60-second child video if you choose to submit one"
+        ],
+        fit: "Use concrete stories about joy in learning, respect for others, effort, curiosity, and readiness for a rigorous but humane K-12 community.",
+        note: "Trinity confirms the Sept 8, 2026 opening date and says 2027-2028 K applicants must turn five by Sept 1, 2027. I used Jan 8 as a conservative file-completion planning date until ISAAGNY posts the exact deadline."
+      },
+      {
+        id: "dalton",
+        name: "The Dalton School",
+        kind: "private",
+        gender: "coed",
+        address: "53 East 91st Street",
+        grades: "K-12",
+        openDate: "2026-08-13T09:00:00-04:00",
+        openLabel: "Application opens Aug 13, 2026",
+        deadline: "2026-11-13T12:00:00-05:00",
+        deadlineLabel: "Application due Nov 13 at noon",
+        confidence: "confirmed",
+        apply: "https://www.ravenna-hub.com/",
+        source: "https://www.dalton.org/apply/steps-to-apply",
+        distance: "Close",
+        materials: [
+          "Ravenna preliminary application and $75 fee or NEEDFA waiver",
+          "Parent/guardian interview",
+          "Parent/guardian tour",
+          "Applicant admissions assessment",
+          "ISAAGNY confidential school report from CCDS",
+          "Clarity financial aid application by Dec 1 if applying"
+        ],
+        fit: "Show curiosity, self-direction, collaboration, comfort exploring ideas, and a child who will thrive in Dalton's House, Assignment, and Lab culture.",
+        note: "Dalton confirms applications open Aug 13 and are accepted until noon on Nov 13."
+      },
+      {
+        id: "collegiate",
+        name: "Collegiate School",
+        kind: "private",
+        gender: "boys",
+        address: "301 Freedom Place South",
+        grades: "K-12",
+        openDate: "2026-09-02T09:00:00-04:00",
+        openLabel: "Application opens Sept 2, 2026 per your list; re-check school page",
+        deadline: "2026-11-13T23:59:00-05:00",
+        deadlineLabel: "Planning hold: likely mid-Nov application deadline",
+        confidence: "historical",
+        apply: "https://www.ravenna-hub.com/",
+        source: "https://www.collegiateschool.org/admissions/apply-to-kindergarten",
+        distance: "West Side",
+        materials: [
+          "Ravenna application and fee",
+          "Optional applicant photo if requested",
+          "Applicant work sample if requested",
+          "Parent/guardian interview",
+          "Applicant visit",
+          "ISAAGNY school report from CCDS, usually due in early January"
+        ],
+        fit: "Use boyhood-specific but not performative stories: curiosity, kindness, emerging independence, play, resilience, and readiness for a demanding boys' school community.",
+        note: "The page I checked still showed the prior cycle's Nov 14, 2025 application date and Jan 5, 2026 report date, so this 2026 deadline is an early planning hold, not a confirmed date."
+      },
+      {
+        id: "allen-stevenson",
+        name: "The Allen-Stevenson School",
+        kind: "private",
+        gender: "boys",
+        address: "132 East 78th Street",
+        grades: "K-8",
+        openDate: "2026-08-27T09:00:00-04:00",
+        openLabel: "Application opens Aug 27, 2026",
+        deadline: "2026-12-01T23:59:00-05:00",
+        deadlineLabel: "Application due Dec 1, 2026",
+        confidence: "confirmed",
+        apply: "https://www.ravenna-hub.com/",
+        source: "https://www.allen-stevenson.org/admissions/apply",
+        distance: "Very close",
+        materials: [
+          "Ravenna application and $75 fee unless applying for financial aid",
+          "Parent tour",
+          "Parent interview",
+          "Applicant visit and assessment",
+          "ISAAGNY school report from CCDS"
+        ],
+        fit: "Use stories that show purpose, emotional growth, energy, creativity, and a boy ready for a structured K-8 community.",
+        note: "Allen-Stevenson confirms the 2027-2028 opening date, Dec 1 application deadline, and Sept 1, 2027 age cutoff."
+      },
+      {
+        id: "trevor",
+        name: "Trevor Day School",
+        kind: "private",
+        gender: "coed",
+        address: "1 West 88th Street",
+        grades: "Nursery-12",
+        openDate: "2026-08-20T09:00:00-04:00",
+        openLabel: "Application opens mid to late Aug 2026",
+        deadline: "2026-12-01T23:59:00-05:00",
+        deadlineLabel: "Application due Dec 1, 2026",
+        confidence: "confirmed",
+        apply: "https://www.ravenna-hub.com/",
+        source: "https://www.trevor.org/admissions/apply-to-lower-school-ps-5",
+        distance: "Crosstown",
+        materials: [
+          "Ravenna application and $75 fee",
+          "Adult meeting",
+          "Child visit or playgroup",
+          "Tour or admissions event",
+          "Confidential school report from CCDS",
+          "All materials due Jan 8, 2027"
+        ],
+        fit: "Trevor's language points toward student agency, inquiry, social-emotional growth, community, and children who can learn through relationships and exploration.",
+        note: "Trevor says applications for 2027-2028 are available in mid to late August, the application deadline is Dec 1, and all materials are due Jan 8."
+      },
+      {
+        id: "browning",
+        name: "The Browning School",
+        kind: "private",
+        gender: "boys",
+        address: "52 East 62nd Street",
+        grades: "K-12",
+        openDate: "2026-08-10T09:00:00-04:00",
+        openLabel: "Application opens Aug 10, 2026",
+        deadline: "2026-12-01T23:59:00-05:00",
+        deadlineLabel: "Preliminary application due Dec 1, 2026",
+        confidence: "confirmed",
+        apply: "https://www.ravenna-hub.com/",
+        source: "https://browning.edu/admission",
+        distance: "South",
+        materials: [
+          "Ravenna preliminary application and $75 fee unless waiver applies",
+          "Parent/guardian events and interview",
+          "Kindergarten playgroup",
+          "ISAAGNY school report from CCDS",
+          "Completed file by Jan 8, 2027"
+        ],
+        fit: "Browning emphasizes relationships, intellectual challenge with support, personal responsibility, resilience, and compassionate boys of intellect and integrity.",
+        note: "Browning confirms Aug 10 opening, Dec 1 preliminary application due date, Jan 8 completed-file date, and says not to send personal or first-choice letters. Re-check age wording because its FAQ text is easy to misread."
+      },
+      {
+        id: "town",
+        name: "The Town School",
+        kind: "private",
+        gender: "coed",
+        address: "540 East 76th Street",
+        grades: "Nursery-8",
+        openDate: "2026-08-21T09:00:00-04:00",
+        openLabel: "Application opens Aug 21, 2026",
+        deadline: "2026-12-01T23:59:00-05:00",
+        deadlineLabel: "Application due Dec 1, 2026",
+        confidence: "confirmed",
+        apply: "https://www.ravenna-hub.com/",
+        source: "https://www.thetownschool.org/admissions/important-dates-and-events",
+        distance: "Very close",
+        materials: [
+          "Online application and fee",
+          "Parent/guardian tour or interview",
+          "Child visit or assessment",
+          "ISAAGNY school report from CCDS",
+          "Financial aid application by Dec 1 if applying"
+        ],
+        fit: "Town's language favors curiosity, creativity, joyful learning, equity and belonging, and a child who is growing in awareness of self, others, and surroundings.",
+        note: "Town confirms the Aug 21 application opening and Dec 1 deadline for 2027-2028."
+      },
+      {
+        id: "unis",
+        name: "United Nations International School",
+        kind: "private",
+        gender: "coed",
+        address: "24-50 FDR Drive",
+        grades: "K-12",
+        openDate: "2026-09-01T09:00:00-04:00",
+        openLabel: "Application opens Sept 1, 2026",
+        deadline: "2026-11-15T23:59:00-05:00",
+        deadlineLabel: "Likely Nov 15 application deadline; re-check after launch",
+        confidence: "mixed",
+        apply: "https://www.ravenna-hub.com/",
+        source: "https://www.unis.org/admissions/apply",
+        distance: "East Midtown",
+        materials: [
+          "Ravenna application and $75 fee",
+          "Required documents uploaded in Ravenna",
+          "Student assessment",
+          "Parent/guardian conversation if requested",
+          "ISAAGNY school form from CCDS",
+          "Financial aid materials if applying"
+        ],
+        fit: "UNIS values international-mindedness, cultural heritage, language, choice, and whole-child growth. Mention any multilingual, global, or cross-cultural family context honestly if it exists.",
+        note: "UNIS confirms applications for September 2027 entry will be available Sept 1. The Nov 15 deadline is based on the prior cycle shown on the page and should be re-checked."
+      },
+      {
+        id: "hunter",
+        name: "Hunter College Elementary School",
+        kind: "public",
+        gender: "coed",
+        address: "71 East 94th Street",
+        grades: "K-6",
+        openDate: "2026-09-01T09:00:00-04:00",
+        openLabel: "Application opens Sept 1, 2026 per your list; verify on Hunter site",
+        deadline: "2026-10-01T09:00:00-04:00",
+        deadlineLabel: "Reminder: verify Hunter deadline and testing steps",
+        confidence: "needs verification",
+        apply: "https://www.hunterschools.org/es",
+        source: "https://www.hunterschools.org/es",
+        distance: "Close",
+        materials: [
+          "Hunter application account or form when posted",
+          "Proof of NYC residency if required",
+          "Proof of age or birth date",
+          "Any required screening, assessment, or teacher input",
+          "Calendar reminders for every testing or visit step"
+        ],
+        fit: "Hunter is academically selective. Focus less on polish and more on verifying eligibility, process, assessment logistics, and whether the environment fits your son's temperament.",
+        note: "I could not confirm the 2027 opening date from the official page in the research pass, so this is a user-provided watch date."
+      },
+      {
+        id: "anderson",
+        name: "The Anderson School - Kindergarten",
+        kind: "public",
+        gender: "coed",
+        address: "100 West 77th Street",
+        grades: "K-8",
+        openDate: "2026-12-01T09:00:00-05:00",
+        openLabel: "Projected DOE/G&T watch date: Dec 1, 2026",
+        deadline: "2027-01-15T23:59:00-05:00",
+        deadlineLabel: "Projected public/G&T deadline placeholder",
+        confidence: "projected",
+        apply: "https://www.myschools.nyc/",
+        source: "https://www.schools.nyc.gov/enrollment/enroll-grade-by-grade/kindergarten",
+        distance: "West Side",
+        materials: [
+          "MySchools account",
+          "DOE kindergarten or G&T application when posted",
+          "Teacher nomination, assessment, or eligibility steps if DOE requires them",
+          "Proof of age and NYC address for enrollment",
+          "Rank-list strategy after current admissions priorities are published"
+        ],
+        fit: "For Anderson, process rules matter more than a parent statement. Track whether DOE keeps, changes, or removes kindergarten G&T entry rules for Fall 2027.",
+        note: "DOE has not published Fall 2027 G&T/K dates in the checked source. This is a reminder to watch MySchools, not a confirmed deadline."
+      },
+      {
+        id: "ps290",
+        name: "P.S. 290 Manhattan New School",
+        kind: "public",
+        gender: "coed",
+        address: "311 East 82nd Street",
+        grades: "K-5",
+        openDate: "2026-12-01T09:00:00-05:00",
+        openLabel: "Projected DOE K watch date: Dec 1, 2026",
+        deadline: "2027-01-15T23:59:00-05:00",
+        deadlineLabel: "Projected public K deadline placeholder",
+        confidence: "projected",
+        apply: "https://www.myschools.nyc/",
+        source: "https://www.schools.nyc.gov/enrollment/enroll-grade-by-grade/kindergarten",
+        distance: "Zoned/public to verify",
+        materials: [
+          "MySchools account",
+          "Ranked public kindergarten application when the cycle opens",
+          "Birth certificate or proof of age",
+          "Two proofs of NYC address for enrollment",
+          "Immunization record for enrollment"
+        ],
+        fit: "For P.S. 290, the most important fit questions are commute, classroom feel, after-school logistics, and whether your address priority is confirmed in MySchools.",
+        note: "You identified P.S. 290 as your public district school. I still recommend verifying zoning with the live DOE address lookup."
+      }
+    ];
+
+    const publicOptions = [
+      {
+        name: "P.S. 290 Manhattan New School",
+        note: "Your stated public district/zoned school. Verify 345 E 80 Street in MySchools and save a screenshot when the Fall 2027 application opens.",
+        link: "https://www.myschools.nyc/"
+      },
+      {
+        name: "Hunter College Elementary School",
+        note: "Separate selective public process outside the normal DOE zoned K application. Treat Sept 1, 2026 as a watch date until Hunter publishes the Fall 2027 process.",
+        link: "https://www.hunterschools.org/es"
+      },
+      {
+        name: "The Anderson School - Kindergarten",
+        note: "Citywide public G&T option. Watch DOE policy closely because kindergarten G&T rules and dates can change.",
+        link: "https://www.myschools.nyc/"
+      }
+    ];
+
+    const sources = [
+      ["NYC DOE kindergarten admissions", "https://www.schools.nyc.gov/enrollment/enroll-grade-by-grade/kindergarten"],
+      ["Trinity K-4 admissions", "https://www.trinityschoolnyc.org/admissions/admissions-k-4"],
+      ["Dalton steps to apply", "https://www.dalton.org/apply/steps-to-apply"],
+      ["Collegiate apply to kindergarten", "https://www.collegiateschool.org/admissions/apply-to-kindergarten"],
+      ["Allen-Stevenson admissions apply", "https://www.allen-stevenson.org/admissions/apply"],
+      ["Trevor Lower School admissions", "https://www.trevor.org/admissions/apply-to-lower-school-ps-5"],
+      ["Browning admission", "https://browning.edu/admission"],
+      ["Town important dates", "https://www.thetownschool.org/admissions/important-dates-and-events"],
+      ["UNIS apply", "https://www.unis.org/admissions/apply"],
+      ["Hunter College Elementary School", "https://www.hunterschools.org/es"]
+    ];
+
+    const interviewPrep = {
+      trinity: {
+        style: "Warm but academically serious K-12 process. Expect parent conversation plus a child visit or classroom observation. Trinity's stated themes make joy, respect, hard work, community, and learning habits more useful than achievement claims.",
+        questions: [
+          "What kind of classroom helps your son do his best thinking?",
+          "Tell us about a time he worked hard on something difficult.",
+          "How does your family support respect, kindness, and community at home?",
+          "Why Trinity specifically, beyond reputation?"
+        ],
+        moves: [
+          "Use one CCDS example that shows effort, not just intelligence.",
+          "Name a specific program or value from Trinity and connect it to your son.",
+          "Keep the tone balanced: ambitious family, but child-centered."
+        ]
+      },
+      dalton: {
+        style: "Progressive, inquiry-driven, and self-directed. Dalton's House, Assignment, and Lab model rewards examples of curiosity, independence, collaboration, and comfort with open-ended work.",
+        questions: [
+          "How does your son choose what to explore when he has options?",
+          "How does he handle frustration or a project that does not work at first?",
+          "What have his CCDS teachers noticed about how he learns with peers?",
+          "Why Dalton's educational model for your child?"
+        ],
+        moves: [
+          "Prepare a real story about building, experimenting, drawing, asking why, or solving a problem.",
+          "Show that you understand Dalton is not just rigorous; it expects student agency.",
+          "Avoid sounding like you want Dalton only as a path to future admissions."
+        ]
+      },
+      collegiate: {
+        style: "Boys' K-12 environment with emphasis on character, intellectual life, and long-term school community. Parent questions may probe why a boys' school and whether your son can grow with structure and high expectations.",
+        questions: [
+          "Why do you think a boys' school is right for him?",
+          "What is he like in a group of children?",
+          "What is a growth area his teachers would name?",
+          "How do you help him recover when he is disappointed?"
+        ],
+        moves: [
+          "Do not rely on stereotypes about boys. Use a specific story about your son.",
+          "Have a thoughtful answer on energy, maturity, and emotional growth.",
+          "Explain why Collegiate's long K-12 arc fits your family."
+        ]
+      },
+      "allen-stevenson": {
+        style: "Boys' K-8 process close to home. Expect attention to boyhood, social-emotional maturity, family partnership, and whether he will benefit from a structured elementary and middle-school community.",
+        questions: [
+          "What kind of boy is your son becoming?",
+          "How does he respond to routines and boundaries?",
+          "How does he play with other children?",
+          "Why Allen-Stevenson instead of a coed or K-12 school?"
+        ],
+        moves: [
+          "Use a story showing warmth, imagination, and ability to follow adult direction.",
+          "Be ready to explain why K-8 is attractive.",
+          "Coordinate with CCDS so the teacher report supports your family narrative."
+        ]
+      },
+      trevor: {
+        style: "Coed progressive school with strong student-agency language. Expect questions about your child's interests, social-emotional growth, and how he learns through exploration.",
+        questions: [
+          "What topics or activities currently absorb him?",
+          "How does he ask for help?",
+          "How does he build friendships?",
+          "What drew you to Trevor's approach?"
+        ],
+        moves: [
+          "Use one curiosity story and one friendship story.",
+          "Show comfort with a progressive environment, not only academics.",
+          "Ask questions about classroom rhythm, teacher communication, and transition from Pre-K."
+        ]
+      },
+      browning: {
+        style: "Boys' K-12 school that explicitly values relationships, intellectual challenge, responsibility, resilience, and integrity. It also discourages extra personal or first-choice letters.",
+        questions: [
+          "What adult relationships has your son formed at CCDS?",
+          "How does he show responsibility at home or school?",
+          "What is a moment when he bounced back from frustration?",
+          "Why Browning's boys' school model?"
+        ],
+        moves: [
+          "Follow Browning's instructions closely and do not send extra advocacy letters.",
+          "Choose examples that show character under small everyday pressure.",
+          "Sound interested and informed without overstating certainty."
+        ]
+      },
+      town: {
+        style: "Close-by coed Nursery-8 school with emphasis on joyful learning, curiosity, creativity, belonging, and community. The process should reward authentic examples of classroom readiness and family fit.",
+        questions: [
+          "What makes him curious right now?",
+          "How does he contribute to a classroom community?",
+          "What kind of teacher relationship helps him thrive?",
+          "Why Town for your family?"
+        ],
+        moves: [
+          "Mention the practical closeness only after talking about program fit.",
+          "Use examples of kindness, creativity, and self-awareness.",
+          "Ask about the K transition and how teachers communicate with families."
+        ]
+      },
+      unis: {
+        style: "International, multilingual, globally minded school. The strongest fit stories connect honestly to cultural openness, language, global perspective, and whole-child development.",
+        questions: [
+          "What languages, cultures, or international experiences are part of your family life?",
+          "How does your son respond to difference or new people?",
+          "What does global education mean to your family?",
+          "Why UNIS rather than another strong private school?"
+        ],
+        moves: [
+          "Do not invent international identity. Use real family context only.",
+          "If your son has multilingual exposure, describe it concretely.",
+          "Connect UNIS to values and daily learning, not only prestige."
+        ]
+      },
+      hunter: {
+        style: "Selective public process where parent interviewing is usually less of a lever than eligibility, assessment logistics, and how the child performs in screening or visit steps.",
+        questions: [
+          "Can he separate calmly and follow unfamiliar adult directions?",
+          "Can he explain simple reasoning out loud?",
+          "Can he stay engaged with puzzles, patterns, stories, and visual tasks?",
+          "Is Hunter's accelerated environment right for his temperament?"
+        ],
+        moves: [
+          "Watch the official Hunter page closely from Sept 1, 2026.",
+          "Do light readiness through games, books, sleep, and routines, not drilling.",
+          "Have logistics ready: residency, birth date proof, testing dates, and backup plans."
+        ]
+      },
+      anderson: {
+        style: "Citywide public G&T process. The interview-style lever is limited; the priority is tracking DOE policy, eligibility, nomination or assessment steps, and ranking strategy in MySchools.",
+        questions: [
+          "What are the Fall 2027 G&T eligibility rules?",
+          "Does the process require teacher input, assessment, or both?",
+          "How would Anderson compare with P.S. 290 for your son's day-to-day life?",
+          "What backup public ranking strategy will you use?"
+        ],
+        moves: [
+          "Do not assume the current G&T process will stay the same.",
+          "Check DOE updates monthly starting fall 2026.",
+          "Keep P.S. 290 strategy separate from citywide G&T strategy."
+        ]
+      },
+      ps290: {
+        style: "Zoned public-school process. Selection is primarily admissions priority and available seats, not a parent interview. Your practical work is verification, ranking, documents, and school visit fit.",
+        questions: [
+          "Is 345 E 80 Street still zoned for P.S. 290 in the Fall 2027 cycle?",
+          "What after-school and commute logistics matter?",
+          "How does the school handle kindergarten transition from private Pre-K?",
+          "What documents will enrollment require after an offer?"
+        ],
+        moves: [
+          "Verify the zone in MySchools when the application opens.",
+          "Visit if possible and ask about class size, communication, and after-school.",
+          "Keep proofs of address and immunizations organized before offer season."
+        ]
+      }
+    };
+
+    const processEvents = [
+      {
+        date: "2026-07-15T09:00:00-04:00",
+        title: "CCDS / Susan",
+        body: "Discuss summer birthday timing, final school-list balance, and whether applying out this cycle is right.",
+        confidence: "teacher note"
+      },
+      {
+        date: "2026-09-07T09:00:00-04:00",
+        title: "Parent statement",
+        body: "Have a one-page parent-statement draft ready by Labor Day.",
+        confidence: "teacher note"
+      },
+      {
+        date: "2026-09-15T09:00:00-04:00",
+        title: "Child visit preparation",
+        body: "Practice greeting, waiting, following directions, adult-led work, cooperation, and sleep routine.",
+        confidence: "teacher note"
+      },
+      {
+        date: "2026-12-01T09:00:00-05:00",
+        title: "CCDS reports and recommendations",
+        body: "Make sure release forms are signed; use recommendations only if a school requests them.",
+        confidence: "teacher note"
+      },
+      {
+        date: "2027-01-05T09:00:00-05:00",
+        title: "Top three / first choice",
+        body: "Finalize top-three choices and speak with Susan before telling a school it is first choice.",
+        confidence: "teacher note"
+      },
+      {
+        date: "2027-02-04T10:00:00-05:00",
+        title: "Regular notification",
+        body: "Regular applicant notification no earlier than 10 AM.",
+        confidence: "teacher note"
+      },
+      {
+        date: "2027-02-11T12:00:00-05:00",
+        title: "Regular reply deadline",
+        body: "Regular applicant reply deadline at noon.",
+        confidence: "teacher note"
+      }
+    ];
+
+    const storeKey = "kinder-tracker-v1";
+    const state = JSON.parse(localStorage.getItem(storeKey) || "{}");
+
+    function save() {
+      localStorage.setItem(storeKey, JSON.stringify(state));
+      updateMetrics();
+    }
+
+    function daysUntil(value) {
+      const diff = new Date(value).getTime() - Date.now();
+      return Math.ceil(diff / 86400000);
+    }
+
+    function countdownText(value) {
+      const days = daysUntil(value);
+      if (days < 0) return "Past";
+      if (days === 0) return "Today";
+      if (days === 1) return "1 day";
+      return days + " days";
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function statusFor(school) {
+      if (state[school.id]?.applied) return "complete";
+      const days = daysUntil(school.deadline);
+      if (days >= 0 && days <= 30) return "urgent";
+      return "open";
+    }
+
+    function renderSchools() {
+      const grid = document.getElementById("schoolGrid");
+      const query = document.getElementById("search").value.trim().toLowerCase();
+      const kind = document.getElementById("kindFilter").value;
+      const gender = document.getElementById("genderFilter").value;
+      const status = document.getElementById("statusFilter").value;
+
+      const filtered = schools.filter((school) => {
+        const prep = interviewPrep[school.id];
+        const prepText = prep ? [prep.style, prep.questions.join(" "), prep.moves.join(" ")].join(" ") : "";
+        const blob = [school.name, school.address, school.materials.join(" "), school.fit, school.note, prepText].join(" ").toLowerCase();
+        return (kind === "all" || school.kind === kind) &&
+          (gender === "all" || school.gender === gender) &&
+          (status === "all" || statusFor(school) === status) &&
+          (!query || blob.includes(query));
+      });
+
+      if (!filtered.length) {
+        grid.innerHTML = '<div class="empty">No schools match the current filters.</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map((school) => {
+        const saved = state[school.id] || {};
+        const prep = interviewPrep[school.id];
+        const checks = school.materials.map((item, index) => {
+          const checked = saved.checks?.[index] ? "checked" : "";
+          return `<label class="check"><input type="checkbox" data-check="${school.id}:${index}" ${checked}> <span>${item}</span></label>`;
+        }).join("");
+        const prepBlock = prep ? `
+          <div class="row">
+            <div>
+              <h3>Interview Style</h3>
+              <p>${prep.style}</p>
+            </div>
+            <div>
+              <h3>Practice Questions</h3>
+              <ul>${prep.questions.map((item) => `<li>${item}</li>`).join("")}</ul>
+            </div>
+          </div>
+        ` : "";
+
+        const applied = saved.applied ? "checked" : "";
+        return `
+          <article class="school" data-kind="${school.kind}" data-gender="${school.gender}">
+            <div class="school-head">
+              <div>
+                <h2>${school.name}</h2>
+                <div class="meta">
+                  <span class="pill">${school.kind}</span>
+                  <span class="pill">${school.gender}</span>
+                  <span class="pill">${school.grades}</span>
+                  <span class="pill">${school.distance}</span>
+                  <span class="pill">${school.confidence}</span>
+                  <span class="pill">${school.openLabel || "Open date TBD"}</span>
+                </div>
+              </div>
+              <div class="deadline">
+                <strong>${countdownText(school.deadline)}</strong>
+                <small>${school.deadlineLabel}</small>
+              </div>
+            </div>
+            <div class="school-body">
+              <div class="actions">
+                <a class="button" href="${school.apply}" target="_blank" rel="noopener">Apply</a>
+                <a class="button secondary" href="${school.source}" target="_blank" rel="noopener">Source</a>
+                <label class="check"><input type="checkbox" data-applied="${school.id}" ${applied}> <span>Marked applied/submitted</span></label>
+              </div>
+              <div class="row">
+                <div>
+                  <h3>Materials</h3>
+                  ${checks}
+                </div>
+                <div>
+                  <h3>Fit Notes</h3>
+                  <p>${school.fit}</p>
+                  <p><strong>Research note:</strong> ${school.note}</p>
+                </div>
+              </div>
+              ${prepBlock}
+              <div>
+                <h3>Your Notes</h3>
+                <textarea class="note-field" data-note="${school.id}" placeholder="Interview notes, who to email, child story to use, sibling/legacy context">${escapeHtml(saved.note || "")}</textarea>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderTimeline() {
+      const timeline = document.getElementById("timelineList");
+      const items = processEvents.concat(schools
+        .flatMap((school) => [
+          school.openDate ? { date: school.openDate, title: school.name, body: school.openLabel, confidence: school.confidence } : null,
+          { date: school.deadline, title: school.name, body: school.deadlineLabel, confidence: school.confidence },
+          school.id === "dalton" ? { date: "2026-12-01T23:59:00-05:00", title: school.name, body: "Financial aid deadline if applying", confidence: "confirmed" } : null,
+          school.id === "trevor" ? { date: "2027-01-08T23:59:00-05:00", title: school.name, body: "All materials due", confidence: "confirmed" } : null,
+          school.id === "browning" ? { date: "2027-01-08T23:59:00-05:00", title: school.name, body: "Completed file due", confidence: "confirmed" } : null,
+          school.id === "town" ? { date: "2026-12-01T23:59:00-05:00", title: school.name, body: "Financial aid deadline if applying", confidence: "confirmed" } : null
+        ].filter(Boolean)))
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      timeline.innerHTML = items.map((item) => {
+        const date = new Date(item.date);
+        return `
+          <div class="timeline-item">
+            <div class="date-badge">${date.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}</div>
+            <div><strong>${item.title}</strong><br>${item.body} <span class="pill">${item.confidence}</span></div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderPublic() {
+      document.getElementById("publicList").innerHTML = publicOptions.map((item) => `
+        <div class="timeline-item">
+          <div class="date-badge">${item.name}</div>
+          <div>${item.note}<br><a href="${item.link}" target="_blank" rel="noopener">Check in MySchools</a></div>
+        </div>
+      `).join("");
+    }
+
+    function renderSources() {
+      document.getElementById("sourceList").innerHTML = sources.map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener">${label}</a></li>`).join("");
+    }
+
+    function renderPrep() {
+      document.getElementById("prepList").innerHTML = schools.map((school) => {
+        const prep = interviewPrep[school.id];
+        if (!prep) return "";
+        return `
+          <div class="prep-card">
+            <h3>${school.name}</h3>
+            <p>${prep.style}</p>
+            <div>
+              <h3>Practice Prompts</h3>
+              <ul>${prep.questions.map((item) => `<li>${item}</li>`).join("")}</ul>
+            </div>
+            <div>
+              <h3>Best Moves</h3>
+              <ul>${prep.moves.map((item) => `<li>${item}</li>`).join("")}</ul>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderStatementOptions() {
+      const select = document.getElementById("schoolAngle");
+      select.innerHTML = '<option value="general">General parent statement</option>' +
+        schools.filter((s) => s.kind === "private").map((s) => `<option value="${s.id}">${s.name}</option>`).join("");
+    }
+
+    function profile() {
+      return {
+        name: document.getElementById("childName").value.trim() || "[Child]",
+        pronouns: document.getElementById("pronouns").value.trim() || "he/him",
+        currentSchool: document.getElementById("currentSchool").value.trim() || "CCDS private Pre-K",
+        traits: document.getElementById("traits").value.trim() || "[add three concrete traits]",
+        stories: document.getElementById("stories").value.trim() || "[add one or two specific stories]",
+        hopes: document.getElementById("hopes").value.trim() || "[add your hopes for classroom and community]"
+      };
+    }
+
+    function renderStatement() {
+      const p = profile();
+      const angle = document.getElementById("schoolAngle").value;
+      const school = schools.find((s) => s.id === angle);
+      const fit = school ? school.fit : "curiosity, kindness, independence, resilience, and a classroom where your child is known well.";
+      const schoolName = school ? school.name : "your school";
+      const schoolSentence = school
+        ? `What draws us to ${schoolName} is the way its program appears to value ${fit.charAt(0).toLowerCase() + fit.slice(1)}`
+        : "We are looking for a school that will know our child well, stretch their curiosity, and help them grow as a kind, confident member of a classroom community.";
+
+      document.getElementById("statementDraft").textContent =
+`${p.name} currently attends ${p.currentSchool}. ${p.name} is a child whose personality is easiest to understand through small, concrete moments. ${p.name} is ${p.traits}. At home and in the classroom, we see a child who is still very young, but already developing a real sense of curiosity, humor, empathy, and persistence.
+
+One story that captures ${p.name} is this: ${p.stories}. I share this because it shows more than a skill or an achievement. It shows how ${p.name} approaches people, problems, and new experiences.
+
+As parents, our hope is ${p.hopes}. ${schoolSentence}
+
+We would be grateful for a kindergarten environment where ${p.name} can keep asking questions, build warm relationships with teachers and classmates, and learn to take appropriate risks with support. We believe ${p.name} would bring kindness, imagination, and genuine engagement to ${schoolName}, while also growing from the structure and community the school provides.
+
+Editing notes before submitting:
+1. Replace every bracketed phrase with a real detail.
+2. Add one sentence showing why this exact school fits your child.
+3. Keep the tone honest. A specific modest story is stronger than a generic claim that your child is advanced.`;
+    }
+
+    function loadProfile() {
+      const saved = state.profile || {};
+      document.querySelectorAll("[data-profile]").forEach((field) => {
+        field.value = saved[field.dataset.profile] || "";
+      });
+    }
+
+    function updateMetrics() {
+      document.getElementById("countSchools").textContent = schools.length;
+      const schoolDates = schools.flatMap((s) => [s.openDate, s.deadline]).filter(Boolean);
+      const future = processEvents.map((event) => event.date).concat(schoolDates).map(daysUntil).filter((d) => d >= 0).sort((a, b) => a - b);
+      document.getElementById("nextDays").textContent = future.length ? future[0] : "--";
+      const done = Object.values(state).reduce((sum, entry) => {
+        if (!entry || typeof entry !== "object") return sum;
+        const checks = entry.checks ? Object.values(entry.checks).filter(Boolean).length : 0;
+        return sum + checks + (entry.applied ? 1 : 0);
+      }, 0);
+      document.getElementById("doneCount").textContent = done;
+    }
+
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+        document.querySelectorAll(".section").forEach((s) => s.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.tab).classList.add("active");
+      });
+    });
+
+    ["search", "kindFilter", "genderFilter", "statusFilter"].forEach((id) => {
+      document.getElementById(id).addEventListener("input", renderSchools);
+    });
+
+    document.addEventListener("change", (event) => {
+      const check = event.target.dataset.check;
+      const applied = event.target.dataset.applied;
+      if (check) {
+        const [id, index] = check.split(":");
+        state[id] ||= {};
+        state[id].checks ||= {};
+        state[id].checks[index] = event.target.checked;
+        save();
+      }
+      if (applied) {
+        state[applied] ||= {};
+        state[applied].applied = event.target.checked;
+        save();
+        renderSchools();
+      }
+    });
+
+    document.addEventListener("input", (event) => {
+      const note = event.target.dataset.note;
+      const profileField = event.target.dataset.profile;
+      if (note) {
+        state[note] ||= {};
+        state[note].note = event.target.value;
+        save();
+      }
+      if (profileField) {
+        state.profile ||= {};
+        state.profile[profileField] = event.target.value;
+        save();
+        renderStatement();
+      }
+    });
+
+    document.getElementById("schoolAngle").addEventListener("change", renderStatement);
+    document.getElementById("copyDraft").addEventListener("click", async () => {
+      await navigator.clipboard.writeText(document.getElementById("statementDraft").textContent);
+    });
+    document.getElementById("resetProfile").addEventListener("click", () => {
+      delete state.profile;
+      save();
+      loadProfile();
+      renderStatement();
+    });
+
+    renderStatementOptions();
+    loadProfile();
+    renderSchools();
+    renderTimeline();
+    renderPublic();
+    renderSources();
+    renderPrep();
+    renderStatement();
+    updateMetrics();
+    setInterval(() => {
+      renderSchools();
+      updateMetrics();
+    }, 60000);
+  </script>
+</body>
+</html>

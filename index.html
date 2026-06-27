@@ -490,6 +490,7 @@
       <button class="tab" data-tab="timeline">Timeline</button>
       <button class="tab" data-tab="statements">Statements</button>
       <button class="tab" data-tab="prep">Interview Prep</button>
+      <button class="tab" data-tab="programs">Programs</button>
       <button class="tab" data-tab="public">Public Schools</button>
       <button class="tab" data-tab="official">Official Updates</button>
       <button class="tab" data-tab="sources">Sources</button>
@@ -612,6 +613,14 @@
           <p class="lede">These are practice prompts and likely question types, not guaranteed past questions. Exact questions change and are not always public.</p>
           <div id="prepList" class="prep-list"></div>
         </div>
+      </div>
+    </section>
+
+    <section id="programs" class="section">
+      <div class="panel stack">
+        <h2>Notable Programs</h2>
+        <p class="lede">Use this as a neutral list of impressive clubs, sports, arts, academic, language, and signature-program hooks to verify on tours. We can add filters later.</p>
+        <div id="programList" class="prep-list"></div>
       </div>
     </section>
 
@@ -840,6 +849,32 @@
         note: "UNIS confirms applications for September 2027 entry will be available Sept 1. The Nov 15 deadline is based on the prior cycle shown on the page and should be re-checked."
       },
       {
+        id: "cgps",
+        name: "Columbia Grammar & Preparatory School",
+        kind: "private",
+        gender: "coed",
+        address: "5 West 93rd Street",
+        grades: "Pre-K-12",
+        openDate: "2026-08-15T09:00:00-04:00",
+        openLabel: "Application opens mid-August 2026",
+        deadline: "2026-12-01T23:59:00-05:00",
+        deadlineLabel: "Planning hold: verify CGPS deadline",
+        confidence: "mixed",
+        apply: "https://www.cgps.org/admissions/apply-and-dates",
+        source: "https://www.cgps.org/admissions/apply-and-dates",
+        distance: "West Side",
+        materials: [
+          "CGPS application portal account",
+          "Application and fee if required",
+          "Parent/guardian tour, interview, or admissions conversation if required",
+          "Child visit or assessment if required",
+          "ISAAGNY school report from CCDS if requested",
+          "Financial assistance materials if applying"
+        ],
+        fit: "CGPS presents itself as a balanced, family-oriented Pre-K-12 school focused on nurturing individual interests, challenging students, and keeping children's spirits intact.",
+        note: "CGPS says the 2027-2028 application opens in mid-August and Kindergarten applicants must be five before Sept 1. I did not verify a 2027 application deadline, so Dec 1 remains a planning hold."
+      },
+      {
         id: "hunter",
         name: "Hunter College Elementary School",
         kind: "public",
@@ -944,6 +979,7 @@
       ["Browning admission", "https://browning.edu/admission"],
       ["Town important dates", "https://www.thetownschool.org/admissions/important-dates-and-events"],
       ["UNIS apply", "https://www.unis.org/admissions/apply"],
+      ["Columbia Grammar & Preparatory School admissions", "https://www.cgps.org/admissions/apply-and-dates"],
       ["Hunter College Elementary School", "https://www.hunterschools.org/es"]
     ];
 
@@ -987,6 +1023,11 @@
         level: "verify",
         label: "Age rule not found",
         text: "UNIS's checked application page did not show a clear K birthdate cutoff. Verify the Fall 2027 age rule in Ravenna or with admissions."
+      },
+      cgps: {
+        level: "watch",
+        label: "Summer birthday: eligible, watch readiness",
+        text: "CGPS says Kindergarten applicants must be five before Sept 1. June 21, 2022 meets that for Fall 2027, but CCDS's summer-birthday readiness caution still applies."
       },
       hunter: {
         level: "verify",
@@ -1096,6 +1137,15 @@
         rationale: "UNIS has a distinctive international mission and rolling/relocation dynamics; no K admit rate is published.",
         strategy: "Use only honest international, multilingual, or cross-cultural context; do not force the theme."
       },
+      cgps: {
+        rank: 8,
+        level: "medium",
+        tier: "Competitive fit-dependent option",
+        publishedRate: "Not published for Kindergarten",
+        planningBand: "Competitive, but likely a more practical target/reach than the ultra-reach K-12 group if the fit is strong.",
+        rationale: "CGPS is a long-established coed Pre-K-12 school with a broad program and no public K admit rate; no sibling/legacy still means no preference advantage.",
+        strategy: "Use concrete stories about balance, curiosity, individual interests, and family-school partnership."
+      },
       ps290: {
         rank: 9,
         level: "baseline",
@@ -1104,6 +1154,201 @@
         planningBand: "Best practical baseline if your address priority is confirmed.",
         rationale: "For zoned public K, priority and address verification matter more than interview competitiveness.",
         strategy: "Verify the zone in MySchools and keep documents ready."
+      }
+    };
+
+    const programHighlights = {
+      trinity: {
+        headline: "Rigorous academics, arts, athletics, and service in a large K-12 ecosystem.",
+        bestFor: ["curious generalist", "tradition", "arts", "team habits", "academic stretch"],
+        watchIf: "Your son needs a very small or very progressive early-childhood environment.",
+        highlights: [
+          "Strong long-term academic pathway with broad upper-school course depth.",
+          "Arts and music are useful tour topics; ask how Kindergarten students experience performance, visual arts, and music.",
+          "Athletics become more relevant later; ask how younger students build physical confidence and team habits.",
+          "Community, service, and school tradition are useful fit angles."
+        ],
+        questions: [
+          "How do Kindergarten students experience art, music, movement, and library?",
+          "What traditions help young students feel part of the larger K-12 school?",
+          "How does Trinity support a child who is bright but still socially young?"
+        ]
+      },
+      dalton: {
+        headline: "Progressive inquiry model built around House, Assignment, and Lab.",
+        bestFor: ["open-ended projects", "asking why", "choice", "building/making", "self-direction"],
+        watchIf: "Your son does better with highly explicit structure and fewer choices.",
+        highlights: [
+          "House is central to community and advising.",
+          "Assignment and Lab are distinctive academic structures to understand deeply.",
+          "Good fit for children who like choice, projects, questions, and open-ended exploration.",
+          "Ask how structure is provided for young children within a progressive model."
+        ],
+        questions: [
+          "What does Assignment look like in Kindergarten?",
+          "How much choice do young students get, and how do teachers scaffold it?",
+          "How do teachers support children who need help shifting tasks?"
+        ]
+      },
+      collegiate: {
+        headline: "Boys' K-12 academics, character, athletics, arts, and school tradition.",
+        bestFor: ["boys' school", "athletics later", "tradition", "character", "discussion"],
+        watchIf: "You are unsure about a boys' school or want a coed social environment from K.",
+        highlights: [
+          "Long boys' school arc; ask how character education grows from K onward.",
+          "Athletics and team culture become major parts of later school life.",
+          "Arts, public speaking, and classroom discussion are good fit topics.",
+          "Ask how the school supports different temperaments among boys."
+        ],
+        questions: [
+          "How do Kindergarten boys build confidence and self-regulation?",
+          "How does Collegiate balance tradition with individual personality?",
+          "What arts and movement experiences are built into early grades?"
+        ]
+      },
+      "allen-stevenson": {
+        headline: "Boys' K-8 with emphasis on purpose, creativity, structure, and the whole boy.",
+        bestFor: ["boys' K-8", "making", "arts", "music", "structured energy"],
+        watchIf: "The summer-birthday TK question suggests he may benefit from another year before K.",
+        highlights: [
+          "K-8 model is a core selling point; boys stay young and known longer.",
+          "Ask about music, art, shop/making, performance, athletics, and leadership.",
+          "Cornerstones/Transitional Kindergarten is important given a summer birthday.",
+          "Good fit angle: energy plus emotional growth within clear structure."
+        ],
+        questions: [
+          "What activities are distinctive in the Lower School?",
+          "How do you decide between Kindergarten and Cornerstones for summer birthdays?",
+          "How do teachers channel high energy productively?"
+        ]
+      },
+      trevor: {
+        headline: "Progressive coed program with inquiry, student agency, and social-emotional growth.",
+        bestFor: ["projects", "social-emotional growth", "student agency", "creative play", "coed"],
+        watchIf: "You want a more traditional or highly structured academic style.",
+        highlights: [
+          "Project-based and inquiry-oriented learning are likely key fit angles.",
+          "Ask about outdoor/movement, arts, and how student interests enter classroom work.",
+          "Community and social-emotional development are important interview themes.",
+          "Good for families who value agency more than a purely traditional model."
+        ],
+        questions: [
+          "How do student interests shape Kindergarten projects?",
+          "How do teachers balance freedom with routines?",
+          "What arts, movement, and outdoor experiences are built into the week?"
+        ]
+      },
+      browning: {
+        headline: "Boys' K-12 with relationships, responsibility, intellectual challenge, and athletics/arts.",
+        bestFor: ["boys' K-12", "relationships", "responsibility", "resilience", "athletics later"],
+        watchIf: "You want coed or if your son needs a less competitive boys' K entry process.",
+        highlights: [
+          "Small K entry and strong boys' school identity.",
+          "Athletics and school spirit are useful later-grade topics.",
+          "Ask about public speaking, music, art, and early leadership/responsibility.",
+          "Browning's relationship-centered language should guide parent answers."
+        ],
+        questions: [
+          "How do Kindergarten boys build responsibility?",
+          "What arts and movement experiences are distinctive in the Lower School?",
+          "How does Browning help boys learn from mistakes?"
+        ]
+      },
+      town: {
+        headline: "Close UES coed Nursery-8 emphasizing joyful learning, creativity, community, and belonging.",
+        bestFor: ["joyful learning", "community", "creativity", "nearby routine", "coed K-8"],
+        watchIf: "You strongly prefer a K-12 path with no later exmissions transition.",
+        highlights: [
+          "Nursery-8 model can mean a more child-centered elementary and middle-school arc.",
+          "Ask about sustainability, community action, arts, library, and classroom projects.",
+          "Strong fit angle: curiosity plus awareness of self, others, and surroundings.",
+          "Location and community convenience are practical strengths, but lead with program fit."
+        ],
+        questions: [
+          "What projects or traditions are especially loved in Kindergarten?",
+          "How do young students experience community action or sustainability?",
+          "How do teachers communicate with parents in early grades?"
+        ]
+      },
+      unis: {
+        headline: "International, multilingual, IB-oriented school with global identity.",
+        bestFor: ["languages", "global culture", "international families", "IB mindset", "diversity"],
+        watchIf: "Your family cannot explain a real connection to the international mission.",
+        highlights: [
+          "Language and international-mindedness are the obvious program hooks.",
+          "Ask how early-childhood language exposure works and what choices families have.",
+          "Cultural heritage, global citizenship, and whole-child development are central fit topics.",
+          "Best if your family can explain a real connection to international education."
+        ],
+        questions: [
+          "How are languages introduced in the earliest grades?",
+          "How does UNIS support children from different cultural backgrounds?",
+          "What does international-mindedness look like in Kindergarten?"
+        ]
+      },
+      cgps: {
+        headline: "Broad Pre-K-12 program with arts, athletics, chess, extracurriculars, and individual interests.",
+        bestFor: ["many interests", "chess", "arts", "sports", "balanced school life"],
+        watchIf: "You want a smaller elementary-only or highly progressive environment.",
+        highlights: [
+          "Official CGPS materials emphasize a balanced education and pursuing many avenues of interest.",
+          "Notable areas to ask about: chess, athletics, arts, music, theater, and later advanced science research.",
+          "Good fit angle: a child with multiple interests who benefits from both nurturing and challenge.",
+          "Ask which signature programs start in Grammar School versus later divisions."
+        ],
+        questions: [
+          "Which clubs or signature programs are available to Grammar School students?",
+          "How do Kindergarten teachers notice and develop individual interests?",
+          "How do arts, music, chess, sports, and science show up in younger grades?"
+        ]
+      },
+      hunter: {
+        headline: "Selective public elementary with strong academic reputation and enrichment culture.",
+        bestFor: ["puzzles", "advanced academics", "focus", "reasoning", "high challenge"],
+        watchIf: "The process pressure or accelerated peer group would not fit his temperament.",
+        highlights: [
+          "Process and child readiness matter more than parent marketing.",
+          "Ask what daily life is like for young children in an accelerated peer group.",
+          "Look for balance: intellectual challenge, play, social-emotional support, and commute burden.",
+          "Treat outside prep carefully; routines, sleep, reading, games, and puzzles are safer than drilling."
+        ],
+        questions: [
+          "What does a healthy Kindergarten day look like at Hunter?",
+          "How does the school support asynchronous development?",
+          "What kinds of enrichment are available in lower grades?"
+        ]
+      },
+      anderson: {
+        headline: "Citywide public G&T option where DOE policy and fit matter.",
+        bestFor: ["public G&T", "advanced academics", "citywide peer group", "public option"],
+        watchIf: "Commute, DOE policy uncertainty, or G&T pace does not fit daily life.",
+        highlights: [
+          "Availability depends on DOE's Fall 2027 G&T policy.",
+          "Investigate enrichment, acceleration, arts, clubs, and after-school through current families and MySchools.",
+          "Admissions is process-driven, not parent-statement-driven.",
+          "Compare commute and daily-life fit against P.S. 290."
+        ],
+        questions: [
+          "What enrichment starts in Kindergarten?",
+          "How does Anderson support social-emotional development in a G&T setting?",
+          "What after-school options are realistic for your family?"
+        ]
+      },
+      ps290: {
+        headline: "Zoned public baseline to evaluate for daily life, community, and after-school.",
+        bestFor: ["nearby community", "short commute", "public school", "after-school logistics", "local friends"],
+        watchIf: "You want a specialized academic program or private-school resources from K.",
+        highlights: [
+          "Most important program checks: classroom feel, arts, recess/movement, after-school, and parent communication.",
+          "Talk to current families about Kindergarten transition and class culture.",
+          "Verify zone and admissions priority through MySchools.",
+          "A strong nearby public option can reduce pressure from private-school uncertainty."
+        ],
+        questions: [
+          "What enrichment and specials are part of Kindergarten?",
+          "What after-school programs do families actually use?",
+          "How does the school support children entering from private Pre-K?"
+        ]
       }
     };
 
@@ -1220,6 +1465,20 @@
           "Connect UNIS to values and daily learning, not only prestige."
         ]
       },
+      cgps: {
+        style: "Coed Pre-K-12 school with a broad, family-school community feel. Expect fit questions around your son's interests, readiness for a larger ongoing school, and how your family partners with teachers.",
+        questions: [
+          "What interests or activities currently absorb your son?",
+          "What kind of teacher relationship helps him thrive?",
+          "How does he respond to challenge while keeping joy in learning?",
+          "Why CGPS specifically?"
+        ],
+        moves: [
+          "Use a story showing both curiosity and emotional balance.",
+          "Connect your answer to CGPS's language about nurturing interests and challenging students.",
+          "Ask about Kindergarten transition, class structure, and how the Pre-K-12 community supports younger children."
+        ]
+      },
       hunter: {
         style: "Selective public process where parent interviewing is usually less of a lever than eligibility, assessment logistics, and how the child performs in screening or visit steps.",
         questions: [
@@ -1327,6 +1586,12 @@
         title: "Dalton",
         body: "After submitting, watch for Admissions to call about parent interview, parent tour, and child assessment; allow several weeks.",
         confidence: "confirmed"
+      },
+      {
+        date: "2026-08-15T09:30:00-04:00",
+        title: "CGPS",
+        body: "Application opens in mid-August; create/check the CGPS application portal and watch for tour, visit, interview, and checklist items.",
+        confidence: "confirmed / deadline TBA"
       },
       {
         date: "2026-08-21T09:30:00-04:00",
@@ -1444,10 +1709,12 @@
         const prep = interviewPrep[school.id];
         const age = ageFlags[school.id];
         const comp = competitiveness[school.id];
+        const programs = programHighlights[school.id];
         const prepText = prep ? [prep.style, prep.questions.join(" "), prep.moves.join(" ")].join(" ") : "";
         const ageText = age ? [age.label, age.text].join(" ") : "";
         const compText = comp ? [comp.tier, comp.publishedRate, comp.planningBand, comp.rationale, comp.strategy].join(" ") : "";
-        const blob = [school.name, school.address, school.materials.join(" "), school.fit, school.note, prepText, ageText, compText].join(" ").toLowerCase();
+        const programText = programs ? [programs.headline, programs.highlights.join(" "), programs.questions.join(" ")].join(" ") : "";
+        const blob = [school.name, school.address, school.materials.join(" "), school.fit, school.note, prepText, ageText, compText, programText].join(" ").toLowerCase();
         return (kind === "all" || school.kind === kind) &&
           (gender === "all" || school.gender === gender) &&
           (status === "all" || statusFor(school) === status) &&
@@ -1680,6 +1947,28 @@
       }).join("");
     }
 
+    function renderPrograms() {
+      document.getElementById("programList").innerHTML = schools
+        .filter((school) => programHighlights[school.id])
+        .map((school) => {
+          const programs = programHighlights[school.id];
+          return `
+            <div class="prep-card">
+              <h3>${school.name}</h3>
+              <p>${programs.headline}</p>
+              <div>
+                <h3>Notable Hooks</h3>
+                <ul>${programs.highlights.map((item) => `<li>${item}</li>`).join("")}</ul>
+              </div>
+              <div>
+                <h3>Tour Questions</h3>
+                <ul>${programs.questions.map((item) => `<li>${item}</li>`).join("")}</ul>
+              </div>
+            </div>
+          `;
+        }).join("");
+    }
+
     function renderStatementOptions() {
       const select = document.getElementById("schoolAngle");
       select.innerHTML = '<option value="general">General parent statement</option>' +
@@ -1807,6 +2096,7 @@ Editing notes before submitting:
     renderPublic();
     renderSources();
     renderPrep();
+    renderPrograms();
     renderStatement();
     loadOfficialUpdates();
     updateMetrics();

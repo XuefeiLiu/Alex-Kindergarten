@@ -1,16 +1,16 @@
 {
-  "checkedAt": "2026-06-26T12:59:37.412Z",
-  "changedCount": 4,
+  "checkedAt": "2026-06-27T01:37:48.918Z",
+  "changedCount": 0,
   "errorCount": 0,
   "schools": [
     {
       "name": "Trinity School admissions/events",
       "url": "https://www.trinityschoolnyc.org/admissions/admissions-k-4",
-      "status": "unchanged",
-      "checkedAt": "2026-06-26T12:59:37.412Z",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
       "httpStatus": 200,
       "hash": "3958718345e2d0dba1d1029e1549e092d89f0e68d00125a13e8e9e91e32af3a1",
-      "previousHash": "3958718345e2d0dba1d1029e1549e092d89f0e68d00125a13e8e9e91e32af3a1",
+      "previousHash": null,
       "hints": [
         "Check: Applicants to Kindergarten must turn five years old by September 1st of the year they enter Kindergarten.",
         "Check: The application for the 2026-2027 school year is now closed.",
@@ -25,11 +25,11 @@
     {
       "name": "The Dalton School admissions",
       "url": "https://www.dalton.org/apply/steps-to-apply",
-      "status": "changed",
-      "checkedAt": "2026-06-26T12:59:37.412Z",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
       "httpStatus": 200,
       "hash": "e62b665d5a7a41842700d5fb3c46d64c1a5e8456f7fe4d48b02de007274dcf4f",
-      "previousHash": "b9ee2f43770ec4d98aae3c4bd480955fe263dafee967b42520de50bbf177364a",
+      "previousHash": null,
       "hints": [
         "Check: Within the First Program, the primary entry grade is Kindergarten.",
         "Check: In order to apply to Kindergarten, all children must be 5 years old by September 1 of the year they enter Kindergarten.",
@@ -44,11 +44,11 @@
     {
       "name": "Collegiate School admissions",
       "url": "https://www.collegiateschool.org/admissions/apply-to-kindergarten",
-      "status": "unchanged",
-      "checkedAt": "2026-06-26T12:59:37.412Z",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
       "httpStatus": 200,
       "hash": "c2425d6741f1f7695415a144cc78e665fa54d8f02402a7c63ceba66809b6f184",
-      "previousHash": "c2425d6741f1f7695415a144cc78e665fa54d8f02402a7c63ceba66809b6f184",
+      "previousHash": null,
       "hints": [
         "Check: Virtual Tour (opens in new window/tab).",
         "Check: Please see below the steps required for completing your application.",
@@ -63,11 +63,11 @@
     {
       "name": "The Allen-Stevenson School admissions",
       "url": "https://www.allen-stevenson.org/admissions/apply",
-      "status": "unchanged",
-      "checkedAt": "2026-06-26T12:59:37.412Z",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
       "httpStatus": 200,
       "hash": "af00b35edd659447249f9fbb49e9d544969b24f9a08deb49f4deb6427b438d2e",
-      "previousHash": "af00b35edd659447249f9fbb49e9d544969b24f9a08deb49f4deb6427b438d2e",
+      "previousHash": null,
       "hints": [
         "Check: Admissions Timeline for 2027-2028 Applicants.",
         "Check: Applications Due: December 1, 2026.",
@@ -82,11 +82,11 @@
     {
       "name": "The Allen-Stevenson School visits/events",
       "url": "https://www.allen-stevenson.org/admissions/visit-and-meet-us",
-      "status": "changed",
-      "checkedAt": "2026-06-26T12:59:37.412Z",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
       "httpStatus": 200,
-      "hash": "6063b281e62a1403adbafb7db1bfefe69267a26517599cf89ec9570f8f7a55dd",
-      "previousHash": "0fb0dfeb98876a25e0e83078a7e200fd402db67b7f11a779b360b0141f290af6",
+      "hash": "20a3bb94db330b9676bb810f47f8303f297c565c27e84c09dbad22e5b9a619af",
+      "previousHash": null,
       "hints": [
         "Check: Visit and Meet Us | The Allen Stevenson.",
         "Check: Applications for the 2027-2028 school year go live on August 27, 2026.",
@@ -97,11 +97,11 @@
     {
       "name": "Trevor Day School admissions/events",
       "url": "https://www.trevor.org/admissions/apply-to-lower-school-ps-5",
-      "status": "unchanged",
-      "checkedAt": "2026-06-26T12:59:37.412Z",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
       "httpStatus": 200,
       "hash": "aa56998f5260d4d58077236aca170895bd5f1b9c10de8187371c66ad8ee9b40a",
-      "previousHash": "aa56998f5260d4d58077236aca170895bd5f1b9c10de8187371c66ad8ee9b40a",
+      "previousHash": null,
       "hints": [
         "Check: For 95 years, Trevor Day School has offered an innovative independent school education in the heart of Manhattan.",
         "Check: Applicants for Entry in Fall 2027.",
@@ -116,11 +116,11 @@
     {
       "name": "The Browning School admissions/events",
       "url": "https://browning.edu/admission",
-      "status": "unchanged",
-      "checkedAt": "2026-06-26T12:59:37.412Z",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
       "httpStatus": 200,
       "hash": "fb00d31446f2e7edc301a89781e440a066312ca1aafd1f30773f9f340adf3483",
-      "previousHash": "fb00d31446f2e7edc301a89781e440a066312ca1aafd1f30773f9f340adf3483",
+      "previousHash": null,
       "hints": [
         "Check: Back Mission and Values Why Families Choose Browning Our Community News & Blogs Equitable Practices & Social Impact Civil Discourse \"Buzzwords\" Magazine.",
         "Check: Back Admission Apply Now KinderFirst Upper School Expansion Discover Events Tuition & Tuition Assistance Request Information.",
@@ -135,11 +135,11 @@
     {
       "name": "The Town School dates/events",
       "url": "https://www.thetownschool.org/admissions/important-dates-and-events",
-      "status": "unchanged",
-      "checkedAt": "2026-06-26T12:59:37.412Z",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
       "httpStatus": 200,
       "hash": "7ff09d1d6e9fd6e8c48e52d8bfbe59dec542e2315e08b05f30fec0d014a19830",
-      "previousHash": "7ff09d1d6e9fd6e8c48e52d8bfbe59dec542e2315e08b05f30fec0d014a19830",
+      "previousHash": null,
       "hints": [
         "Check: Please join us for a virtual \"Get to Know the Town School\" session on May 14th from 4:00-5:00pm.",
         "Check: Interested in the 2027-28 school year?",
@@ -154,11 +154,11 @@
     {
       "name": "United Nations International School admissions",
       "url": "https://www.unis.org/admissions/apply",
-      "status": "unchanged",
-      "checkedAt": "2026-06-26T12:59:37.412Z",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
       "httpStatus": 200,
       "hash": "4409f4283b812be7fd3ee373de8bb5641ac08f5a1bbb0757797283dc7dd3205a",
-      "previousHash": "4409f4283b812be7fd3ee373de8bb5641ac08f5a1bbb0757797283dc7dd3205a",
+      "previousHash": null,
       "hints": [
         "Check: Parents' Association By-Laws & Meeting Minutes.",
         "Check: 2026 IB Conference - IB Teacher Training.",
@@ -171,13 +171,51 @@
       ]
     },
     {
+      "name": "Columbia Grammar & Preparatory School admissions",
+      "url": "https://www.cgps.org/admissions/apply-and-dates",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
+      "httpStatus": 200,
+      "hash": "02a99327e904564caa397be0b8b4c8ee43c43a8fdc7f944d4f974bf4a7b01cc0",
+      "previousHash": null,
+      "hints": [
+        "Check: Inquire, Apply & Important Dates - Columbia Grammar & Preparatory School CGPS By Division Grammar School.",
+        "Check: Academics Grammar School Pre-K & K at CGPS.",
+        "Check: CGPS By Division Grammar School.",
+        "Check: Columbia Grammar & Preparatory School Founded 1764 | Pre-K-12.",
+        "Check: The application for the 2027-2028 academic year will open in mid-August!.",
+        "Check: Grammar School, Pre-K-5: Janet Barrett ( jbarrett@cgps.org ).",
+        "Check: Please note: Pre-Kindergarten applicants must be four years old before September 1, and Kindergarten applicants must be five years old before September 1.",
+        "Check: Please create an account with the CGPS application portal and check it regularly throughout the admissions season to view your checklist and manage your application."
+      ]
+    },
+    {
+      "name": "Columbia Grammar & Preparatory School",
+      "url": "https://www.cgps.org/",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
+      "httpStatus": 200,
+      "hash": "4fdfb9cff1913ea2530df96cb2bd38baaaee71c7751de001f6db49a34cdc8cae",
+      "previousHash": null,
+      "hints": [
+        "Check: Columbia Grammar & Preparatory School, Pre-K–12 Private School in NYC CGPS By Division Grammar School.",
+        "Check: Academics Grammar School Pre-K & K at CGPS.",
+        "Check: CGPS By Division Grammar School.",
+        "Check: Columbia Grammar & Preparatory School Founded 1764 | Pre-K-12.",
+        "Check: Columbia Grammar & Preparatory School is living proof that children can achieve their highest ambitions while keeping their spirits intact.",
+        "Check: The Grammar School meets each child where they are and helps them develop into the most fully realized version of themselves.",
+        "Check: At Columbia Grammar & Preparatory School, we pride ourselves on providing an individual experience for our students so that they may pursue as many avenues of interest as possible.",
+        "Check: “As an educator and the parent of four very different children, I have been amazed by how well CGPS has been a wonderful fit for all of them."
+      ]
+    },
+    {
       "name": "Hunter College Campus Schools",
       "url": "https://www.hunterschools.org/",
-      "status": "changed",
-      "checkedAt": "2026-06-26T12:59:37.412Z",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
       "httpStatus": 200,
       "hash": "7e61c4f964b73fe3abe37a6da9a6784ed4c19f3d47d33dd60fc826289d885789",
-      "previousHash": "8f91f1bcd43b476abd5f0879fb6f02746245b3bd08752003b9d1232321927f9b",
+      "previousHash": null,
       "hints": [
         "Check: Eligibility for Fall 2027 Entry.",
         "Check: 6/16/2026 NDI's 50th Anniversary.",
@@ -192,11 +230,11 @@
     {
       "name": "NYC DOE Kindergarten",
       "url": "https://www.schools.nyc.gov/enrollment/enroll-grade-by-grade/kindergarten",
-      "status": "changed",
-      "checkedAt": "2026-06-26T12:59:37.412Z",
+      "status": "new",
+      "checkedAt": "2026-06-27T01:37:48.918Z",
       "httpStatus": 200,
       "hash": "017d4c990f39c56aeaac304a70059d03056eef3d120bc6d984f2dbe6a12dc0f5",
-      "previousHash": "fddc81031e8babf409b80e796f7c982590ac7381f0c769ae811fd1fc90d531b0",
+      "previousHash": null,
       "hints": [
         "Check: Assessments for Screened Schools.",
         "Check: Annual Parent Teacher Meetings for English Language Learners.",

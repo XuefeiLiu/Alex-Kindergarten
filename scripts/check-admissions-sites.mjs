@@ -11,6 +11,8 @@ const targets = [
   ["The Browning School admissions/events", "https://browning.edu/admission"],
   ["The Town School dates/events", "https://www.thetownschool.org/admissions/important-dates-and-events"],
   ["United Nations International School admissions", "https://www.unis.org/admissions/apply"],
+  ["Columbia Grammar & Preparatory School admissions", "https://www.cgps.org/admissions/apply-and-dates"],
+  ["Columbia Grammar & Preparatory School", "https://www.cgps.org/"],
   ["Hunter College Campus Schools", "https://www.hunterschools.org/"],
   ["NYC DOE Kindergarten", "https://www.schools.nyc.gov/enrollment/enroll-grade-by-grade/kindergarten"]
 ];
